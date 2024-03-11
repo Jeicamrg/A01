@@ -23,7 +23,7 @@ strain = []
 for j in range(len(deformation)):
   strain.append(deformation[j]-Compliance_funct(force[j]))
   stress.append(force[j]/A)
-  #stress.append((force[j]/A))
+  
 mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
