@@ -31,4 +31,4 @@ for k in range(len(strain)):
 
 plot_graph(strain, stress)
 
-#Toughness calculation
+#Toughness calculations - to be done
