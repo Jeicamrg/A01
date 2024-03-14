@@ -1,8 +1,9 @@
 from InputFunctionForCsv import read_csv_file
 from MakeGraphFromLists import plot_graph, bplot_graph
 from scipy import stats, interpolate
+import numpy as np
 
-[cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('compliance.csv')
+[cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('Data\Compressive\compliance.csv')
 
 #slope, intercept, r_value, p_value, std_err = stats.linregress(ncdeformation, ncforce)
 ncdeformation =[]
@@ -34,4 +35,13 @@ for k in range(len(strain)):
 
 bplot_graph(strain, stress, file)
 
-#Toughness calculation
+def calculate_toughness(strain, stress):
+  strain=np.array(strain)
+  stress=np.array(stress)
+
+  area= np.trapz(stress,strain)
+  
+  return area
+
+toughness=calculate_toughness(strain, stress)
+print("Toughness", toughness) #put units
