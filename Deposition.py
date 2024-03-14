@@ -1,16 +1,31 @@
-import matplotlib as plt
+import matplotlib.pyplot as plt
 import pandas as pd
 
-df = pd.read_excel('Data/incubation time-fabric weight & salt weight.xlsx')
+df = pd.read_csv('Data/incubation time-fabric weight salt weight.csv')
 
-incubation_time = data['Incubation time'].tolist()
-pre_biomineralization_weight = data['Pre biomineralization weight (g)'].tolist()
-biomineralized_weight = data['Biomineralized weight (g)'].tolist()
 
-# Convert 'not measured' entries to None
-biomineralized_weight = [float(w) if w != 'not measured' else None for w in biomineralized_weight]
+pre_biomineralization_weight = df['Pre biomineralization weight (g)'].tolist()
+biomineralized_weight = df['Biomineralized weight (g)'].tolist()
 
-# Print or further process the extracted data
-print("Incubation Time:", incubation_time)
-print("Pre Biomineralization Weight:", pre_biomineralization_weight)
-print("Biomineralized Weight:", biomineralized_weight)
+time=[3,9,12,15,18,21,24] #hours as a incubation time
+print(pre_biomineralization_weight)
+print(biomineralized_weight)
+
+
+
+
+plt.plot(time, pre_biomineralization_weight, marker='o', label='Pre-biomineralization weight')
+plt.plot(time, biomineralized_weight, marker='o', label='Biomineralized weight')
+
+# Add labels and title
+plt.xlabel('Time (hours)')
+plt.ylabel('Weight (g)')
+plt.title('Weight vs Time')
+
+# Add legend
+plt.legend()
+
+# Show plot
+plt.grid(True)
+plt.savefig('deposition.png')
+
