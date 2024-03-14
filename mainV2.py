@@ -1,5 +1,5 @@
 from InputFunctionForCsv import read_csv_file
-from MakeGraphFromLists import plot_graph, bplot_graph
+from MakeGraphFromListsV2 import plot_graph, bplot_graph
 from scipy import stats, interpolate
 import numpy as np
 
@@ -15,8 +15,8 @@ for i in range(len(cdeformation)):
 
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
-file = 'bm-s1'
-file2 = file + '.csv'
+file = 'bm-s2'
+file2 = 'Data\Compressive\\' + file + '.csv'
 #Ultimate tensile strength
 A = 0.1 #m^2
 original_l = 0.1 #m
@@ -25,7 +25,7 @@ strain = []
 [deformation, force, travel, sg1, ttime] = read_csv_file(file2)
 
 for j in range(len(deformation)):
-  strain.append((deformation[j]-Compliance_funct(force[j]))/original_l)
+  strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
   stress.append(force[j]/A)
   #stress.append((force[j]/A))
 mstrain = min(strain)
