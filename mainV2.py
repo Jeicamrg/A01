@@ -3,6 +3,7 @@ from MakeGraphFromLists import plot_graph, bplot_graph
 from scipy import stats, interpolate
 import numpy as np
 
+#COMPLIANCE
 [cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('Data\Compressive\compliance.csv')
 
 #slope, intercept, r_value, p_value, std_err = stats.linregress(ncdeformation, ncforce)
@@ -15,10 +16,11 @@ for i in range(len(cdeformation)):
 
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
-file = 'bm-s1'
+#FILE COMMANDS
+file = 'nbm-s1'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
-#Ultimate tensile strength
+#NORMALIZING THE DATA WITH COMPLIANCE
 A = 0.1 #m^2 [PLACEHOLDER]
 original_l = 0.1 #m [PLACEHOLDER]
 stress = []
@@ -28,7 +30,7 @@ deformation, force, travel, sg1, ttime = read_csv_file(file2)
 print(deformation)
 
 for j in range(len(deformation)):
-  strain.append(((deformation[j]-Compliance_funct(force[j]))/original_l) * 1000)
+  strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
   stress.append(force[j]/A)
   #stress.append((force[j]/A))
 mstrain = min(strain)
@@ -38,13 +40,41 @@ for k in range(len(strain)):
 
 bplot_graph(strain, stress, file)
 
-def calculate_toughness(strain, stress):
-  strain=np.array(strain)
-  stress=np.array(stress)
+#DEFINITIONS
+def calculate_ult_tens(stress):
+  stress = np.array(stress)
 
-  area= np.trapz(stress,strain)
+  ult_t = np.max(stress)
+
+  return ult_t
+
+def calculate_stiffness(strain, stress):
+  strain = np.array(strain)
+  stress = np.array(stress)
+
+  strain = strain[5:80] #how to fix :(
+  stress = stress[5:80]
+  stiffnesslist = []
+
+  for i in range(len(stress)):
+    stiffnesslist.append(stress[i]/strain[i])
+
+  stiffness = np.average(stiffnesslist)
+
+  return stiffness
+
+def calculate_toughness(strain, stress):
+  strain = np.array(strain)
+  stress = np.array(stress)
+
+  area = np.trapz(stress,strain)
   
   return area
 
-toughness=calculate_toughness(strain, stress)
-print("Toughness", toughness) #put units
+#TESTING DEFINITIONS
+tensile_ultimate = calculate_ult_tens(stress)
+print("Ultimate tensile strength is", tensile_ultimate, "N per meter squared")
+stifness_test = calculate_stiffness(strain, stress)
+print("Stiffness is", stifness_test, "N per m squared")
+toughness = calculate_toughness(strain, stress)
+print("Toughness is", toughness, "N per m squared")
