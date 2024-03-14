@@ -17,7 +17,7 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'nbm-s1'
+file = 'bm-s1'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
 #NORMALIZING THE DATA WITH COMPLIANCE
