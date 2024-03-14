@@ -20,3 +20,17 @@ def plot_graph(list1, list2):
     plt.title('Graph')
     plt.grid(True)
     plt.savefig('plot.png')
+
+def bplot_graph(list1, list2, name):
+    if len(list1) != len(list2):
+        print("Error: Lists must have the same length.")
+        return
+
+    # Create the graph
+    plt.plot(list1, list2)
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Stress[MPa]')
+    plt.title('Stress Strain Graph')
+    plt.grid(True)
+    
+    plt.savefig(name+'.png')
