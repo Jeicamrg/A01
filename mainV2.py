@@ -31,6 +31,7 @@ deformation, force, travel, sg1, ttime = read_csv_file(file2)
 
 #print(deformation)
 
+
 for j in range(len(deformation)):
   strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
   stress.append(force[j]/A)
@@ -41,6 +42,9 @@ for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
 #bplot_graph(strain, stress, file)
+
+print('First value of strain list')
+print(strain[1])
 
 #DEFINITIONS
 def calculate_ult_tens(stress):
@@ -60,13 +64,15 @@ def calculate_stiffness(strain, stress):
   for i in range(len(stress)-2):
     k = i+1
     stress_derivatives.append(stress[k+1]-stress[k-1])
-  print(stress_derivatives)
+  #print(stress_derivatives)
   plt.plot(strain, stress_derivatives)
   plt.xlabel('Strain[-]')
   plt.ylabel('Stress[MPa]')
   plt.title('Stress Strain Graph')
   plt.grid(True)
-    
+  
+  
+
   plt.savefig('Derivatives' +'.png')
   
   strain = strain[5:80] #how to fix :(
