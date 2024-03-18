@@ -20,11 +20,21 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'bm-s4'
+file = 'bm-s2'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
+thickness_lst = [2.65, 2.73, 2.56, 2.71, 2.3, 2.69, 2.71, 2.37, 2.36, 2.34]#to be updated if more samples are added
+if file[0] == 'b':
+  t = thickness_lst[int(file[-1])-1]
+elif file[0] == 'n':
+  t = thickness_lst[int(file[-1])+3]
+else:
+  t = 2
+  print('Thickness error')
+
+
 #NORMALIZING THE DATA WITH COMPLIANCE
-A = 0.015*0.005 #m^2 change the 0.005 depending on the sample
+A = 0.015*t#m^2 change the 0.005 depending on the sample
 original_l = 0.14 #m
 stress = []
 strain = []
