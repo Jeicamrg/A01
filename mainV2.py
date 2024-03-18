@@ -20,7 +20,7 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'bm-s3'
+file = 'bm-s4'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
 #NORMALIZING THE DATA WITH COMPLIANCE
@@ -35,14 +35,14 @@ deformation, force, travel, sg1, ttime = read_csv_file(file2)
 
 for j in range(len(deformation)):
   strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
-  stress.append(force[j]/A)
+  stress.append(force[j]/(A))
   #stress.append((force[j]/A))
 mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
-#bplot_graph(strain, stress, file)
+bplot_graph(strain, stress, file)
 
 #print('First value of strain list')
 #print(strain[1])
@@ -133,7 +133,7 @@ def calculate_toughness(strain, stress):
 #  if stress[i]>3*10**7:
 #    print((stress[i]/strain[i])/10**9)
 #    break
-test_stiff(strain,stress)
+#test_stiff(strain,stress)
 #stiffness_calc(strain, stress)
 #TESTING DEFINITIONS
 #tensile_ultimate = calculate_ult_tens(stress)
