@@ -53,24 +53,26 @@ def calculate_ult_tens(stress):
 def calculate_stiffness(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
-  strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'cubic' , fill_value='extrapolate')
-  stress_derivatives = []
-  stress_derivatives.append(stress[1]-stress[0])
-  stress_derivatives.append(stress[1]-stress[0])
-  for i in range(len(stress)-2):
-    k = i+1
-    stress_derivatives.append(stress[k+1]-stress[k-1])
-  print(stress_derivatives)
+  strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'nearest' , fill_value='extrapolate')
+  for i in range(len(strain)):
+    if strain[i] == 0:
+      dstrain = 0.1
+      stress_derivatives = np.gradient(strain_stress_funct, dstrain)
+    else:
+      dstrain = strain[i] - strain[i-1]
+      stress_derivatives = np.gradient(strain_stress_funct, dstrain)
+  # stress_derivatives.append(np.gradient(strain_stress_funct, (strain[1]-strain[0])))
+  # for i in range(len(strain)-1):
+  #   dstrain = strain[i+1] - strain[i]
+  #   stress_derivatives.append(np.gradient(strain_stress_funct, dstrain))
   plt.plot(strain, stress_derivatives)
   plt.xlabel('Strain[-]')
   plt.ylabel('Stress[MPa]')
-  plt.title('Stress Strain Graph')
+  plt.title('Derivative Stress Strain Graph')
   plt.grid(True)
     
   plt.savefig('Derivatives' +'.png')
   
-  strain = strain[5:80] #how to fix :(
-  stress = stress[5:80]
   stiffnesslist = []
 
   for i in range(len(stress)):
