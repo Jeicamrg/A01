@@ -54,8 +54,7 @@ for k in range(len(strain)):
 
 bplot_graph(strain, stress, file)
 
-#print('First value of strain list')
-#print(strain[1])
+
 
 #DEFINITIONS
 def calculate_ult_tens(stress):
@@ -130,6 +129,7 @@ def test_stiff(strain, stress):
   plt.grid(True)
   plt.savefig('Linear' +'.png')
   print(E_mod/10**9)
+
 
 def calculate_toughness(strain, stress):
   strain = np.array(strain)
