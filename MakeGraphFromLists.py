@@ -27,7 +27,7 @@ def bplot_graph(list1, list2, name):
         return
 
     # Create the graph
-    plt.plot(list1, list2)
+    plt.plot(list1, list2,'o')
     plt.xlabel('Strain[-]')
     plt.ylabel('Stress[MPa]')
     plt.title('Stress Strain Graph')
