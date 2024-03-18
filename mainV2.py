@@ -102,6 +102,10 @@ def stiffness_calc(strain, stress):
   dy_lst.append(lstrain[-1]-lstrain[-2])
   bplot_graph(lstrain[15:-1], dy_lst[15:-1], 'Derivatives2')
 
+E=(stress[1]-stress[0])/(strain[1]-strain[0])
+
+
+
 def calculate_toughness(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
