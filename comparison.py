@@ -62,8 +62,6 @@ def run_comparison(nf_data):
             else:
                 ndata['prop'][j] = gf[0] + '\n[' + gf[-1]
 
-    print(fdata)
-
     normalise(data)
     normalise(sp_data)
 
@@ -84,7 +82,6 @@ def run_comparison(nf_data):
             [sp_fdata["nf_avg"], sp_fdata["nf_std"]]])
     ]
 
-    print(final_data)
     radar_plot(final_data)
 
 
@@ -97,5 +94,3 @@ for i in range(len(nf_data["avg"])):
     nf_data["avg"][i] = nf_data["avg"][i]*r
 
 run_comparison(nf_data)
-
-print(nf_data)
