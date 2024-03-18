@@ -1,6 +1,7 @@
 from InputFunctionForCsv import read_csv_file
 from MakeGraphFromLists import plot_graph, bplot_graph
 from scipy import stats, interpolate
+from scipy.stats import linregress
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
@@ -43,8 +44,8 @@ for k in range(len(strain)):
 
 #bplot_graph(strain, stress, file)
 
-print('First value of strain list')
-print(strain[1])
+#print('First value of strain list')
+#print(strain[1])
 
 #DEFINITIONS
 def calculate_ult_tens(stress):
@@ -96,15 +97,28 @@ def stiffness_calc(strain, stress):
       break
   for i in range(len(lstrain)-1):
     dx = lstrain[i+1]-lstrain[i]
-    dy = stress[i+1]-stress[i]
+    dy = (stress[i+1]-stress[i])/dx
     dx_lst.append(dx)
     dy_lst.append(dy)
   dy_lst.append(lstrain[-1]-lstrain[-2])
   bplot_graph(lstrain[15:-1], dy_lst[15:-1], 'Derivatives2')
 
-E=(stress[1]-stress[0])/(strain[1]-strain[0])
 
-
+def test_stiff(strain, stress):
+  strain = np.array(strain)
+  stress = np.array(stress)
+  linear_stress_mask = stress < 3*10**7
+  linear_stress = stress[linear_stress_mask]
+  linear_strain = strain[linear_stress_mask]
+  linear_reg_out = linregress(linear_strain, linear_stress)
+  E_mod = linear_reg_out[0]
+  plt.plot(linear_strain, linear_stress)
+  plt.xlabel('Strain[-]')
+  plt.ylabel('Stress[MPa]')
+  plt.title('Stress Strain Graph')
+  plt.grid(True)
+  plt.savefig('Linear' +'.png')
+  print(E_mod/10**9)
 
 def calculate_toughness(strain, stress):
   strain = np.array(strain)
@@ -115,7 +129,12 @@ def calculate_toughness(strain, stress):
   return area
 
 
-stiffness_calc(strain, stress)
+#for i in range(len(stress)):
+#  if stress[i]>3*10**7:
+#    print((stress[i]/strain[i])/10**9)
+#    break
+test_stiff(strain,stress)
+#stiffness_calc(strain, stress)
 #TESTING DEFINITIONS
 #tensile_ultimate = calculate_ult_tens(stress)
 #print("Ultimate tensile strength is", tensile_ultimate, "N per meter squared")
