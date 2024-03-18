@@ -20,7 +20,7 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'bm-s3'
+file = 'bm-s4'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
 #NORMALIZING THE DATA WITH COMPLIANCE
@@ -35,14 +35,14 @@ deformation, force, travel, sg1, ttime = read_csv_file(file2)
 
 for j in range(len(deformation)):
   strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
-  stress.append(force[j]/A)
+  stress.append(force[j]/(A))
   #stress.append((force[j]/A))
 mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
-#bplot_graph(strain, stress, file)
+bplot_graph(strain, stress, file)
 
 
 
@@ -57,25 +57,26 @@ def calculate_ult_tens(stress):
 def calculate_stiffness(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
+  strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'cubic' , fill_value='extrapolate')
   stress_derivatives = []
   stress_derivatives.append(stress[1]-stress[0])
   stress_derivatives.append(stress[1]-stress[0])
   for i in range(len(stress)-2):
     k = i+1
     stress_derivatives.append(stress[k+1]-stress[k-1])
-  #print(stress_derivatives)
+  print(stress_derivatives)
   plt.plot(strain, stress_derivatives)
   plt.xlabel('Strain[-]')
   plt.ylabel('Stress[MPa]')
-  plt.title('Stress Strain Graph')
+  plt.title('Derivative Stress Strain Graph')
   plt.grid(True)
   
   
 
   plt.savefig('Derivatives' +'.png')
   
-  #strain = strain[5:80] #how to fix :(
-  #stress = stress[5:80]
+  strain = strain[5:80] #how to fix :(
+  stress = stress[5:80]
   stiffnesslist = []
 
   for i in range(len(stress)):
@@ -133,7 +134,7 @@ def calculate_toughness(strain, stress):
 #  if stress[i]>3*10**7:
 #    print((stress[i]/strain[i])/10**9)
 #    break
-test_stiff(strain,stress)
+#test_stiff(strain,stress)
 #stiffness_calc(strain, stress)
 #TESTING DEFINITIONS
 #tensile_ultimate = calculate_ult_tens(stress)
