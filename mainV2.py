@@ -20,7 +20,7 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'bm-s3'
+file = 'bm-s1'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
 thickness_lst = [2.65, 2.73, 2.56, 2.71, 2.3, 2.69, 2.71, 2.37, 2.36, 2.34]#to be updated if more samples are added
@@ -52,7 +52,7 @@ mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
-#bplot_graph(x, y, file)
+bplot_graph(strain, stress, file)
 
 def e_mod_plot(E):
   x = []
@@ -158,7 +158,7 @@ def tangent_stiffness(strain, stress):
   plt.title('Stress Strain Graph')
   plt.grid(True)
   plt.savefig('Tangents' +'.png')
-  max_tan = max(tangent_lines)/(10**9)
+  max_tan = max(tangent_lines)/(10**9)#convert to GPa
   return max_tan
 
 
@@ -190,4 +190,7 @@ def calculate_toughness(strain, stress):
 #pos_max_der = derivatives.index(max_der)
 #max_strain = strain[pos_max_der]
 #print(max_der/max_strain)
-#print(tangent_stiffness(strain, stress))
+#print(tangent_stiffness(strain, stress), file)
+print(file)
+print('Ult compr = ', calculate_ult_tens(stress)/(10**6))
+print('Toughness = ', calculate_toughness(strain, stress)/1000000)
