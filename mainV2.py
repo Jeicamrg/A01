@@ -20,7 +20,7 @@ for i in range(len(cdeformation)):
 Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 
 #FILE COMMANDS
-file = 'bm-s2'
+file = 'bm-s3'
 file2 = 'Data\Compressive\\' + file + '.csv'
 
 thickness_lst = [2.65, 2.73, 2.56, 2.71, 2.3, 2.69, 2.71, 2.37, 2.36, 2.34]#to be updated if more samples are added
@@ -51,8 +51,7 @@ mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
-
-bplot_graph(strain, stress, file)
+#bplot_graph(strain, stress, file)
 
 
 
@@ -67,14 +66,14 @@ def calculate_ult_tens(stress):
 def calculate_stiffness(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
-  strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'cubic' , fill_value='extrapolate')
+  #strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'cubic' , fill_value='extrapolate')
   stress_derivatives = []
   stress_derivatives.append(stress[1]-stress[0])
   stress_derivatives.append(stress[1]-stress[0])
   for i in range(len(stress)-2):
     k = i+1
     stress_derivatives.append(stress[k+1]-stress[k-1])
-  print(stress_derivatives)
+  return(stress_derivatives)
   plt.plot(strain, stress_derivatives)
   plt.xlabel('Strain[-]')
   plt.ylabel('Stress[MPa]')
@@ -117,7 +116,7 @@ def stiffness_calc(strain, stress):
 def test_stiff(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
-  linear_stress_mask = stress < 3*10**7
+  linear_stress_mask = stress < 6*10**4
   linear_stress = stress[linear_stress_mask]
   linear_strain = strain[linear_stress_mask]
   linear_reg_out = linregress(linear_strain, linear_stress)
@@ -130,6 +129,37 @@ def test_stiff(strain, stress):
   plt.savefig('Linear' +'.png')
   print(E_mod/10**9)
 
+def tangent_stiffness(strain, stress):
+  def slope(x, y):
+    dx = x[1] - x[0]
+    dy = y[1] - y[0]
+    return dy / dx if dx != 0 else float('inf')  # Handle vertical lines
+    
+  tangent_lines = []
+  for i in range(len(strain)-1):
+    x =[]
+    y=[]
+    x.append(strain[i])
+    x.append(strain[i+1])
+    y.append(stress[i])
+    y.append(stress[i+1])
+    print(y[1]-y[0])
+    m = slope(x, y)
+    if m != float('inf'):  # Non-vertical tangent line
+      b = y[1] - m * x[1]
+      tangent_lines.append(m/(y[1]-y[0]))
+    else:  # Vertical tangent line
+      tangent_lines.append(lambda x, x1=x[1]: x1)  # Line equation: x = x1
+  plt.plot(strain[16:], tangent_lines[15:])
+  plt.xlabel('Strain[-]')
+  plt.ylabel('Tangent[MPa]')
+  plt.title('Stress Strain Graph')
+  plt.grid(True)
+  plt.savefig('Tangents' +'.png')
+  #print(E_mod/10**9)
+  max_tan = max(tangent_lines)
+  return max_tan
+
 
 def calculate_toughness(strain, stress):
   strain = np.array(strain)
@@ -141,8 +171,8 @@ def calculate_toughness(strain, stress):
 
 
 #for i in range(len(stress)):
-#  if stress[i]>3*10**7:
-#    print((stress[i]/strain[i])/10**9)
+#  if stress[i]>6*10**4:
+#    print((stress[i]/strain[i])/10**6)
 #    break
 #test_stiff(strain,stress)
 #stiffness_calc(strain, stress)
@@ -153,3 +183,10 @@ def calculate_toughness(strain, stress):
 #print("Stiffness is", stifness_test, "N per m squared")
 #toughness = calculate_toughness(strain, stress)
 #print("Toughness is", toughness, "N per m squared")
+
+#derivatives = calculate_stiffness(strain, stress)
+#max_der = max(derivatives)
+#pos_max_der = derivatives.index(max_der)
+#max_strain = strain[pos_max_der]
+#print(max_der/max_strain)
+print(tangent_stiffness(strain, stress))
