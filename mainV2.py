@@ -34,7 +34,7 @@ else:
 
 
 #NORMALIZING THE DATA WITH COMPLIANCE
-A = 0.015*t#m^2 change the 0.005 depending on the sample
+A = 0.015*t/1000#m^2 change the 0.005 depending on the sample
 original_l = 0.14 #m
 stress = []
 strain = []
@@ -51,9 +51,16 @@ mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
-#bplot_graph(strain, stress, file)
 
+#bplot_graph(x, y, file)
 
+def e_mod_plot(E):
+  x = []
+  y = []
+  for i in range(200):
+    x.append(strain[i])
+    y.append(strain[i]*E)
+  bplot_graph(strain, stress, file)
 
 #DEFINITIONS
 def calculate_ult_tens(stress):
@@ -133,7 +140,7 @@ def tangent_stiffness(strain, stress):
   def slope(x, y):
     dx = x[1] - x[0]
     dy = y[1] - y[0]
-    return dy / dx if dx != 0 else float('inf')  # Handle vertical lines
+    return dy / dx if dx != 0 else float('inf')  
     
   tangent_lines = []
   for i in range(len(strain)-1):
@@ -143,21 +150,15 @@ def tangent_stiffness(strain, stress):
     x.append(strain[i+1])
     y.append(stress[i])
     y.append(stress[i+1])
-    print(y[1]-y[0])
-    m = slope(x, y)
-    if m != float('inf'):  # Non-vertical tangent line
-      b = y[1] - m * x[1]
-      tangent_lines.append(m/(y[1]-y[0]))
-    else:  # Vertical tangent line
-      tangent_lines.append(lambda x, x1=x[1]: x1)  # Line equation: x = x1
-  plt.plot(strain[16:], tangent_lines[15:])
+    m = slope(x, y) 
+    tangent_lines.append(m)
+  plt.plot(strain[11:], tangent_lines[10:])
   plt.xlabel('Strain[-]')
-  plt.ylabel('Tangent[MPa]')
+  plt.ylabel('Tangent[Pa]')
   plt.title('Stress Strain Graph')
   plt.grid(True)
   plt.savefig('Tangents' +'.png')
-  #print(E_mod/10**9)
-  max_tan = max(tangent_lines)
+  max_tan = max(tangent_lines)/(10**9)
   return max_tan
 
 
@@ -189,4 +190,4 @@ def calculate_toughness(strain, stress):
 #pos_max_der = derivatives.index(max_der)
 #max_strain = strain[pos_max_der]
 #print(max_der/max_strain)
-print(tangent_stiffness(strain, stress))
+#print(tangent_stiffness(strain, stress))
