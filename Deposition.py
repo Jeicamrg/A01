@@ -40,3 +40,49 @@ plt.legend()
 plt.grid(True)
 plt.savefig('percentage_difference.png')
 
+#Calcium carbonate
+
+#Molecular mass 
+
+Ca= 40.08 #u
+Cl = 35.45 #u
+Mg =24.305 #u
+CalciumChloride = 0.073 #g
+MagnesiumChloride = 0.102 #g
+urea = 2 #g
+C = 12.011 #u
+O = 15.999 #u
+N = 14.007 #u
+H = 1.0080 #u
+
+CaCl2= Ca + 2*Cl
+MgCl2= Mg + 2*Cl
+CONH2= C+O+(N+2*H)*2
+
+#Weight of ions 
+
+Ca_i= CalciumChloride/CaCl2* Ca
+print('Weight of calcium ions in CalciumChloride:')
+print(Ca_i)
+
+Cl_i= CalciumChloride/CaCl2 * 2 * Cl
+print('Weight of chlorine ions in CalciumChloride:')
+print(Cl_i)
+
+Cl_i_2=MagnesiumChloride/MgCl2*2*Cl
+print('Weight of chlorine ions in magnesium chloride:')
+print(Cl_i_2)
+
+Mg_i= MagnesiumChloride/MgCl2*Mg
+print('Weight of magnesium ions in magnesium chloride:')
+print(Mg_i)
+
+if urea/CONH2 < Ca_i/Ca:
+    print('Mass of calcium carbonate:')
+    print(urea/CONH2*100)
+else:
+    print('Mass of calcium carbonate:')
+    print(Ca_i/Ca*100)
+
+
+#ask deniz for the deposition rate
