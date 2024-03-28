@@ -10,8 +10,8 @@ biomineralized_weight = df['Biomineralized weight (g)'].tolist()
 time=[3,9,12,15,18,21,24] #hours as a incubation time
 
 plt.figure()
-plt.plot(time, pre_biomineralization_weight, marker='o', label='Pre-biomineralization weight')
-plt.plot(time, biomineralized_weight, marker='o', label='Biomineralized weight')
+plt.scatter(time, pre_biomineralization_weight, marker='o', label='Pre-biomineralization weight')
+plt.scatter(time, biomineralized_weight, marker='o', label='Biomineralized weight')
 plt.xlabel('Time (hours)')
 plt.ylabel('Weight (g)')
 plt.title('Weight vs Time')
@@ -92,6 +92,23 @@ CaCO3_mass= (Ca_i/Ca)*100
 
 total_mass= MgCO3_mass+CaCO3_mass
 
+print('Total mass is:')
 print(total_mass)
 
-#ask deniz for the deposition rate
+
+deposition_rate = []  
+
+for i in range(len(time)):
+    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass * time[i]))
+
+plt.figure()
+plt.scatter(time, deposition_rate, label='Deposition rate [-/hr]')
+plt.xlabel('Incubation time [hours]')
+plt.ylabel('Deposition rate')
+plt.title('Depositon rate over time')
+plt.legend()
+plt.grid(True)
+plt.savefig('deposition_rate.png')
+
+
+print(deposition_rate)
