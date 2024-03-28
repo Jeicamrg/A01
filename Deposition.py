@@ -32,7 +32,7 @@ for i in range(len(time)):
 print(difference)
 
 plt.figure()
-plt.plot(time, difference, label='Percentage difference (%)')
+plt.scatter(time, difference, label='Percentage difference (%)')
 plt.xlabel('Incubation time [hours]')
 plt.ylabel('Percentage difference (%)')
 plt.title('Percentage difference in weight vs incubation time')
@@ -57,6 +57,7 @@ H = 1.0080 #u
 
 CaCl2= Ca + 2*Cl
 MgCl2= Mg + 2*Cl
+MgCO3 = Mg + C + 3*O
 CONH2= C+O+(N+2*H)*2
 
 #Weight of ions 
@@ -77,12 +78,20 @@ Mg_i= MagnesiumChloride/MgCl2*Mg
 print('Weight of magnesium ions in magnesium chloride:')
 print(Mg_i)
 
-if urea/CONH2 < Ca_i/Ca:
-    print('Mass of calcium carbonate:')
-    print(urea/CONH2*100)
-else:
-    print('Mass of calcium carbonate:')
-    print(Ca_i/Ca*100)
+MgCO3_mass= (Mg_i/Mg)*MgCO3
 
+
+# if urea/CONH2 < Ca_i/Ca:
+#     print('Mass of calcium carbonate:')
+#     print(urea/CONH2*100)
+# else:
+#     print('Mass of calcium carbonate:')
+#     print(Ca_i/Ca*100)
+
+CaCO3_mass= (Ca_i/Ca)*100
+
+total_mass= MgCO3_mass+CaCO3_mass
+
+print(total_mass)
 
 #ask deniz for the deposition rate
