@@ -96,8 +96,19 @@ print('Total mass is:')
 print(total_mass)
 
 #ask deniz for the deposition rate
+deposition_rate = []  # Initialize deposition_rate outside the loop
+
 for i in range(len(time)):
-    deposition_rate=[]
-    deposition_rate.append((biomineralized_weight[i]-pre_biomineralization_weight[i])/(total_mass*time[i]))
-    print('Deposition rate for', time[i], 'hours')
-    print(deposition_rate)
+    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass * time[i]))
+
+plt.figure()
+plt.scatter(time, deposition_rate, label='Deposition rate [-/hr]')
+plt.xlabel('Incubation time [hours]')
+plt.ylabel('Deposition rate')
+plt.title('Depositon rate over time')
+plt.legend()
+plt.grid(True)
+plt.savefig('deposition_rate.png')
+
+
+print(deposition_rate)
