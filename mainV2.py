@@ -5,25 +5,54 @@ from scipy.stats import linregress
 import scipy
 import numpy as np
 import matplotlib.pyplot as plt
-
-#COMPLIANCE
-[cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('Data\Compressive\compliance.csv')
-
-#slope, intercept, r_value, p_value, std_err = stats.linregress(ncdeformation, ncforce)
-ncdeformation =[]
-ncforce = []
-for i in range(len(cdeformation)):
-  if cdeformation[i]>=0.5:
-    ncdeformation.append(cdeformation[i])
-    ncforce.append(cforce[i])
-
-Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
-
 #FILE COMMANDS
-file = 'bm-s1'
-file2 = 'Data\Compressive\\' + file + '.csv'
+file = 'bm1'
+ftype = 'Data\Flexural\\'
+file2 =  ftype + file + '.csv'
+dtype = ftype[5]
 
-thickness_lst = [2.65, 2.73, 2.56, 2.71, 2.3, 2.69, 2.71, 2.37, 2.36, 2.34]#to be updated if more samples are added
+
+#READING THE DATA
+if dtype=='C':
+  deformation, force, travel, sg1, ttime = read_csv_file(file2)
+elif dtype=='F':
+  deformation, force, travel, crosshead, ttime = read_csv_file(file2)
+elif dtype=='T':
+  force, deformation, gtg, ttime = read_csv_file(file2)
+else:
+  print('You probably have the wrong folder')
+
+#############################################################################The compliance needs to be updated depending on the type of test
+#COMPLIANCE
+if dtype=='C':
+  [cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('Data\Compressive\compliance.csv')
+  ncdeformation =[]
+  ncforce = []
+  for i in range(len(cdeformation)):
+    if cdeformation[i]>=0.5:
+      ncdeformation.append(cdeformation[i])
+      ncforce.append(cforce[i])
+      Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
+else:
+  print('No compliance')
+  ncforce = []
+  ncdeformation = []
+  for i in range(len(deformation)):
+    ncforce.append(force[i])
+    ncdeformation.append(0)
+  Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
+
+
+#THICKNESS
+if dtype=='C':
+  thickness_lst = [2.65, 2.73, 2.56, 2.71, 2.3, 2.69, 2.71, 2.37, 2.36, 2.34]
+elif dtype=='F':
+  thickness_lst = [2.63, 2.67, 2.61, 2.85, 2.28, 2.29, 2.28, 2.23]
+elif dtype=='T':
+  thickness_lst = [1.68, 1.8, 1.72, 1.7, 1.4, 1.42, 1.29, 1.64]
+else:
+  print('You probably have the wrong folder')
+
 if file[0] == 'b':
   t = thickness_lst[int(file[-1])-1]
 elif file[0] == 'n':
@@ -38,7 +67,6 @@ A = 0.015*t/1000#m^2 change the 0.005 depending on the sample
 original_l = 0.14 #m
 stress = []
 strain = []
-deformation, force, travel, sg1, ttime = read_csv_file(file2)
 
 #print(deformation)
 
@@ -52,7 +80,7 @@ mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
-bplot_graph(strain, stress, file)
+bplot_graph(strain, stress, file, ftype)
 
 def e_mod_plot(E):
   x = []
@@ -191,6 +219,6 @@ def calculate_toughness(strain, stress):
 #max_strain = strain[pos_max_der]
 #print(max_der/max_strain)
 #print(tangent_stiffness(strain, stress), file)
-print(file)
-print('Ult compr = ', calculate_ult_tens(stress)/(10**6))
-print('Toughness = ', calculate_toughness(strain, stress)/1000000)
+#print(file)
+#print('Ult compr = ', calculate_ult_tens(stress)/(10**6))
+#print('Toughness = ', calculate_toughness(strain, stress)/1000000)
