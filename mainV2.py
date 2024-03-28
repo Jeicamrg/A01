@@ -6,8 +6,8 @@ import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 #FILE COMMANDS
-file = 'bm1'
-ftype = 'Data\Flexural\\'
+file = 'nbm3'
+ftype = 'Data\Tensile\\'
 file2 =  ftype + file + '.csv'
 dtype = ftype[5]
 
