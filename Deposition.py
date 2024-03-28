@@ -95,8 +95,8 @@ total_mass= MgCO3_mass+CaCO3_mass
 print('Total mass is:')
 print(total_mass)
 
-#ask deniz for the deposition rate
-deposition_rate = []  # Initialize deposition_rate outside the loop
+
+deposition_rate = []  
 
 for i in range(len(time)):
     deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass * time[i]))
