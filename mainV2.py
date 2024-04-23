@@ -22,7 +22,7 @@ elif dtype=='T':
 else:
   print('You probably have the wrong folder')
 
-#############################################################################The compliance needs to be updated depending on the type of test
+
 #COMPLIANCE
 if dtype=='C':
   [cdeformation, cforce, ctravel, csg1, cttime] = read_csv_file('Data\Compressive\compliance.csv')
@@ -63,39 +63,28 @@ else:
 
 
 #NORMALIZING THE DATA WITH COMPLIANCE
-A = 0.015*t/1000#m^2 change the 0.005 depending on the sample
+A = 0.015*t/1000#m^2 
 original_l = 0.14 #m
 stress = []
 strain = []
 
-#print(deformation)
-
-
 for j in range(len(deformation)):
   strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
   stress.append(force[j]/(A))
-  #stress.append((force[j]/A))
 mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
 
+#for plotting stress strain grph
 bplot_graph(strain, stress, file, ftype)
 
-def e_mod_plot(E):
-  x = []
-  y = []
-  for i in range(200):
-    x.append(strain[i])
-    y.append(strain[i]*E)
-  bplot_graph(strain, stress, file)
 
-#DEFINITIONS
+#############################################################################################################
+#Actual calcualtions below
 def calculate_ult_tens(stress):
   stress = np.array(stress)
-
   ult_t = np.max(stress)
-
   return ult_t
 
 def tangent_stiffness(strain, stress):
@@ -103,7 +92,7 @@ def tangent_stiffness(strain, stress):
     dx = x[1] - x[0]
     dy = y[1] - y[0]
     return dy / dx if dx != 0 else float('inf')  
-    
+  
   tangent_lines = []
   for i in range(len(strain)-1):
     x =[]
@@ -148,31 +137,9 @@ def tangent_stiffness(strain, stress):
 def calculate_toughness(strain, stress):
   strain = np.array(strain)
   stress = np.array(stress)
-
   area = np.trapz(stress,strain)
-  
   return area
 
-
-#for i in range(len(stress)):
-#  if stress[i]>6*10**4:
-#    print((stress[i]/strain[i])/10**6)
-#    break
-#test_stiff(strain,stress)
-#stiffness_calc(strain, stress)
-#TESTING DEFINITIONS
-#tensile_ultimate = calculate_ult_tens(stress)
-#print("Ultimate tensile strength is", tensile_ultimate, "N per meter squared")
-#stifness_test = calculate_stiffness(strain, stress)
-#print("Stiffness is", stifness_test, "N per m squared")
-#toughness = calculate_toughness(strain, stress)
-#print("Toughness is", toughness, "N per m squared")
-
-#derivatives = calculate_stiffness(strain, stress)
-#max_der = max(derivatives)
-#pos_max_der = derivatives.index(max_der)
-#max_strain = strain[pos_max_der]
-#print(max_der/max_strain)
 
 print(file)
 print('Youngs modulus = ', tangent_stiffness(strain, stress))

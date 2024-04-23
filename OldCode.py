@@ -14,7 +14,7 @@ def test_stiff(strain, stress):
   plt.savefig('Linear' +'.png')
   print(E_mod/10**9)
 
-  def stiffness_calc(strain, stress):
+def stiffness_calc(strain, stress):
   dx_lst=[]
   dy_lst=[]
   lstrain = []
@@ -63,3 +63,31 @@ def calculate_stiffness(strain, stress):
 
   return stiffness
 
+def e_mod_plot(E):
+  x = []
+  y = []
+  for i in range(200):
+    x.append(strain[i])
+    y.append(strain[i]*E)
+  bplot_graph(strain, stress, file)
+
+
+#for i in range(len(stress)):
+#  if stress[i]>6*10**4:
+#    print((stress[i]/strain[i])/10**6)
+#    break
+#test_stiff(strain,stress)
+#stiffness_calc(strain, stress)
+#TESTING DEFINITIONS
+#tensile_ultimate = calculate_ult_tens(stress)
+#print("Ultimate tensile strength is", tensile_ultimate, "N per meter squared")
+#stifness_test = calculate_stiffness(strain, stress)
+#print("Stiffness is", stifness_test, "N per m squared")
+#toughness = calculate_toughness(strain, stress)
+#print("Toughness is", toughness, "N per m squared")
+
+#derivatives = calculate_stiffness(strain, stress)
+#max_der = max(derivatives)
+#pos_max_der = derivatives.index(max_der)
+#max_strain = strain[pos_max_der]
+#print(max_der/max_strain)
