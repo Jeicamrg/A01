@@ -6,8 +6,8 @@ import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 #FILE COMMANDS
-file = 'nmb4'
-ftype = 'Data\Flexural\\'
+file = 'nbm3'
+ftype = 'Data\Tensile\\'
 file2 =  ftype + file + '.csv'
 dtype = ftype[5]
 
@@ -183,13 +183,30 @@ def tangent_stiffness(strain, stress):
       tangent_lines.append(0)
       continue
     tangent_lines.append(m)
-  plt.plot(strain[11:], tangent_lines[10:])
-  plt.xlabel('Strain[-]')
-  plt.ylabel('Tangent[Pa]')
-  plt.title('Stress Strain Graph')
-  plt.grid(True)
-  plt.savefig('Tangents' +'.png')
+  #for plotting tangents
+  def tanplot():
+    plt.plot(strain[11:], tangent_lines[10:])
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Young\'s Modulus [Pa]')
+    plt.title('Young\'s Modulus Strain Graph')
+    plt.grid(True)
+    plt.savefig('Tangents' +'.png')
+  #tanplot()
   max_tan = max(tangent_lines)/(10**9)#convert to GPa
+
+  def sanity_check():
+  #sanity check
+    sanity=[]
+    for i in range(len(strain)-1):
+      sanity.append(max_tan*(10**9)*strain[i])
+    tot_len = int(((len(strain)/3)+1))
+    plt.plot(strain[11:tot_len], sanity[10:tot_len-1])
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Young\'s Modulus [Pa]')
+    plt.title('Young\'s Modulus Strain Graph')
+    plt.grid(True)
+    plt.savefig('Sanity' +'.png')
+  #sanity_check()
   return max_tan
 
 
