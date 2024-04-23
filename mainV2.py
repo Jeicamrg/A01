@@ -6,8 +6,8 @@ import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 #FILE COMMANDS
-file = 'nbm3'
-ftype = 'Data\Tensile\\'
+file = 'nmb4'
+ftype = 'Data\Flexural\\'
 file2 =  ftype + file + '.csv'
 dtype = ftype[5]
 
@@ -179,6 +179,9 @@ def tangent_stiffness(strain, stress):
     y.append(stress[i])
     y.append(stress[i+1])
     m = slope(x, y) 
+    if m>10**(11): #patch to prevent infinities
+      tangent_lines.append(0)
+      continue
     tangent_lines.append(m)
   plt.plot(strain[11:], tangent_lines[10:])
   plt.xlabel('Strain[-]')
@@ -218,7 +221,8 @@ def calculate_toughness(strain, stress):
 #pos_max_der = derivatives.index(max_der)
 #max_strain = strain[pos_max_der]
 #print(max_der/max_strain)
-#print(tangent_stiffness(strain, stress), file)
-#print(file)
-#print('Ult compr = ', calculate_ult_tens(stress)/(10**6))
-#print('Toughness = ', calculate_toughness(strain, stress)/1000000)
+
+print(file)
+print('Youngs modulus = ', tangent_stiffness(strain, stress))
+print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
+print('Toughness = ', calculate_toughness(strain, stress)/1000000)
