@@ -98,72 +98,6 @@ def calculate_ult_tens(stress):
 
   return ult_t
 
-def calculate_stiffness(strain, stress):
-  strain = np.array(strain)
-  stress = np.array(stress)
-  #strain_stress_funct = interpolate.interp1d(strain, stress, kind = 'cubic' , fill_value='extrapolate')
-  stress_derivatives = []
-  stress_derivatives.append(stress[1]-stress[0])
-  stress_derivatives.append(stress[1]-stress[0])
-  for i in range(len(stress)-2):
-    k = i+1
-    stress_derivatives.append(stress[k+1]-stress[k-1])
-  return(stress_derivatives)
-  plt.plot(strain, stress_derivatives)
-  plt.xlabel('Strain[-]')
-  plt.ylabel('Stress[MPa]')
-  plt.title('Derivative Stress Strain Graph')
-  plt.grid(True)
-  
-  
-
-  plt.savefig('Derivatives' +'.png')
-  
-  strain = strain[5:80] #how to fix :(
-  stress = stress[5:80]
-  stiffnesslist = []
-
-  for i in range(len(stress)):
-    stiffnesslist.append(stress[i]/strain[i])
-
-  stiffness = np.average(stiffnesslist)
-
-  return stiffness
-
-def stiffness_calc(strain, stress):
-  dx_lst=[]
-  dy_lst=[]
-  lstrain = []
-  for i in range(len(strain)):
-    if strain[i]<=0.00125:
-      lstrain.append(strain[i])
-    else:
-      break
-  for i in range(len(lstrain)-1):
-    dx = lstrain[i+1]-lstrain[i]
-    dy = (stress[i+1]-stress[i])/dx
-    dx_lst.append(dx)
-    dy_lst.append(dy)
-  dy_lst.append(lstrain[-1]-lstrain[-2])
-  bplot_graph(lstrain[15:-1], dy_lst[15:-1], 'Derivatives2')
-
-
-def test_stiff(strain, stress):
-  strain = np.array(strain)
-  stress = np.array(stress)
-  linear_stress_mask = stress < 6*10**4
-  linear_stress = stress[linear_stress_mask]
-  linear_strain = strain[linear_stress_mask]
-  linear_reg_out = linregress(linear_strain, linear_stress)
-  E_mod = linear_reg_out[0]
-  plt.plot(linear_strain, linear_stress)
-  plt.xlabel('Strain[-]')
-  plt.ylabel('Stress[MPa]')
-  plt.title('Stress Strain Graph')
-  plt.grid(True)
-  plt.savefig('Linear' +'.png')
-  print(E_mod/10**9)
-
 def tangent_stiffness(strain, stress):
   def slope(x, y):
     dx = x[1] - x[0]
@@ -183,6 +117,7 @@ def tangent_stiffness(strain, stress):
       tangent_lines.append(0)
       continue
     tangent_lines.append(m)
+
   #for plotting tangents
   def tanplot():
     plt.plot(strain[11:], tangent_lines[10:])
@@ -194,8 +129,8 @@ def tangent_stiffness(strain, stress):
   #tanplot()
   max_tan = max(tangent_lines)/(10**9)#convert to GPa
 
+  #for plotting the Young's modulus to make sure it makes sense
   def sanity_check():
-  #sanity check
     sanity=[]
     for i in range(len(strain)-1):
       sanity.append(max_tan*(10**9)*strain[i])
