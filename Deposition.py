@@ -1,13 +1,14 @@
 import matplotlib.pyplot as plt
 import pandas as pd
 
-df = pd.read_csv('Data/incubation time-fabric weight salt weight.csv')
+df = pd.read_csv('Data/UPDATED_incubation_time.csv')
 
 
 pre_biomineralization_weight = df['Pre biomineralization weight (g)'].tolist()
 biomineralized_weight = df['Biomineralized weight (g)'].tolist()
 
-time=[3,9,12,15,18,21,24] #hours as a incubation time
+
+time=[3,6,15,17,21,24] #hours as a incubation time
 
 plt.figure()
 plt.scatter(time, pre_biomineralization_weight, marker='o', label='Pre-biomineralization weight')
@@ -99,15 +100,17 @@ print(total_mass)
 deposition_rate = []  
 
 for i in range(len(time)):
-    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass * time[i]))
+    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass))
+
 
 plt.figure()
-plt.scatter(time, deposition_rate, label='Deposition rate [-/hr]')
+plt.scatter(time, deposition_rate, label='Deposition rate', color='#be2596')
+plt.ylim(0, 0.5)
 plt.xlabel('Incubation time [hours]')
 plt.ylabel('Deposition rate')
 plt.title('Depositon rate over time')
-plt.legend()
 plt.grid(True)
+plt.legend()
 plt.savefig('deposition_rate.png')
 
 
