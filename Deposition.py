@@ -109,7 +109,7 @@ for i in range(len(time)):
 
 plt.figure()
 plt.scatter(time, deposition_rate, label='Deposition rate', color='#be2596')
-plt.ylim(0, 0.5)
+plt.ylim(0, 85)
 plt.xlabel('Incubation time [hours]')
 plt.ylabel('Deposition rate')
 plt.title('Depositon rate over time')
@@ -124,14 +124,16 @@ print(deposition_rate)
 
 plt.figure()
 # Plotting deposition rate
-plt.scatter(time, deposition_rate, label='Deposition rate', color='#be2596')
+plt.scatter(time, deposition_rate, label='Deposition rate (%)', color='#be2596')
 # Plotting percentage difference
-plt.scatter(time, difference, label='Percentage difference (%)')
+plt.scatter(time, difference, label='Mass change (%)')
 #plt.ylim(0, max(0.5, max(deposition_rate)))  # Adjusting y-axis limit
 plt.xlabel('Incubation time [hours]')
-plt.ylabel('Value')
+plt.ylabel('Change in %')
 plt.title('Deposition rate and Percentage difference over time')
 plt.grid(True)
 plt.legend()
 plt.savefig('combined_plot.png')
 plt.show()
+
+
