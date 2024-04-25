@@ -30,7 +30,8 @@ for i in range(len(time)):
     diff = ((biomineralized_weight[i] - pre_biomineralization_weight[i]) / pre_biomineralization_weight[i]) * 100
     difference.append(diff)
 
-print(difference)
+print('bhsjhbjhas')
+print(biomineralized_weight[5]-pre_biomineralization_weight[5])
 
 plt.figure()
 plt.scatter(time, difference, label='Percentage difference (%)')
@@ -55,6 +56,7 @@ C = 12.011 #u
 O = 15.999 #u
 N = 14.007 #u
 H = 1.0080 #u
+
 
 CaCl2= Ca + 2*Cl
 MgCl2= Mg + 2*Cl
@@ -90,8 +92,10 @@ MgCO3_mass= (Mg_i/Mg)*MgCO3
 #     print(Ca_i/Ca*100)
 
 CaCO3_mass= (Ca_i/Ca)*100
+print("Value test:")
+print(CaCO3_mass)
 
-total_mass= MgCO3_mass+CaCO3_mass
+total_mass= MgCO3_mass 
 
 print('Total mass is:')
 print(total_mass)
@@ -100,7 +104,7 @@ print(total_mass)
 deposition_rate = []  
 
 for i in range(len(time)):
-    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass))
+    deposition_rate.append((biomineralized_weight[i] - pre_biomineralization_weight[i]) / (total_mass)*100) 
 
 
 plt.figure()
@@ -115,3 +119,19 @@ plt.savefig('deposition_rate.png')
 
 
 print(deposition_rate)
+
+
+
+plt.figure()
+# Plotting deposition rate
+plt.scatter(time, deposition_rate, label='Deposition rate', color='#be2596')
+# Plotting percentage difference
+plt.scatter(time, difference, label='Percentage difference (%)')
+#plt.ylim(0, max(0.5, max(deposition_rate)))  # Adjusting y-axis limit
+plt.xlabel('Incubation time [hours]')
+plt.ylabel('Value')
+plt.title('Deposition rate and Percentage difference over time')
+plt.grid(True)
+plt.legend()
+plt.savefig('combined_plot.png')
+plt.show()
