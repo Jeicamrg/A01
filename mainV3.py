@@ -16,21 +16,40 @@ def one_plotter(list1, list2, name):
     sig = name[17]
     if sig == '1':
         color = color_lst[0]
+        label = '10mM'
     elif sig =='2':
         color = color_lst[1]
+        label = '20mM'
     elif sig =='5':
         color = color_lst[2]
+        label = '50mM'
     elif sig =='T':
         color = color_lst[3]
+        label = 'TNB'
     else:
         color = color_lst[4]
-    plt.plot(list1, list2, color=color)
+        label = 'NT'
+    if sig!='N' and sig!='T':
+        if name[-5]=='1':
+            plt.plot(list1, list2, label = label, color=color)
+        else:
+            plt.plot(list1, list2, color=color)
+    if sig=='N':
+        if name[-5]=='2':
+            plt.plot(list1, list2, label = label, color=color)
+        else:
+            plt.plot(list1, list2, color=color)
+    if sig=='T':
+        if name[-10]=='1':
+            plt.plot(list1, list2, label = label, color=color)
+        else:
+            plt.plot(list1, list2, color=color)
     plt.xlabel('Strain')
     plt.ylabel('Stress')
     plt.title('Comparison')
     plt.grid(True)
     if name == 'Data\MolarChange\\NBM\\nbm-s6.csv':
-        plt.legend(['10mM', '20mM', '50mM', 'TNB', 'NT'], loc ="lower right")
+        plt.legend(loc ="lower right")
         plt.savefig('Data\MolarChange\To_bind_Them')
 
 ftype = 'Data\MolarChange\\'
