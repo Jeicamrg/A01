@@ -162,8 +162,11 @@ def get_info(lst,lst2,lst3):
     return final_data
 
 
-path1 = r"C:\Users\thoma\Documents\Python\A01\Actual_images"
-path2 = r"C:\Users\thoma\Documents\Python\A01\Data_SEM"
+script_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+path1 = os.path.join(script_dir, "Actual_images")
+path2 = os.path.join(script_dir, "Data_SEM")
 
 print(get_info(measure(path1,path2)[0],measure(path1,path2)[1],measure(path1,path2)[2]))
 
