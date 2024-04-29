@@ -129,7 +129,10 @@ for i in folders:
         #bplot_graph2(strain, stress, file)
 
         #for plotting the singular file to rule them all uncomment below
-        #one_plotter(strain, stress, file)
+        one_plotter(strain, stress, file)
+        #sig = file[17]
+        #if sig=='1' or sig=='N':
+        #    one_plotter(strain, stress, file)
         def results():
             ult_tens = calculate_ult_tens(stress)/(10**6)
             youngs = tangent_stiffness(strain, stress)
