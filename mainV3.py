@@ -12,7 +12,9 @@ def one_plotter(list1, list2, name):
     if len(list1) != len(list2):
         print("Error: Lists must have the same length.")
         return
+    #the colors below are the teal color palette Dennis is using
     #color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
+    #the colors below are a nice palette imho MG
     color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
     sig = name[17]
     if sig == '1':
@@ -72,7 +74,9 @@ width10 = [15, 15, 15, 15]
 width20 = [12, 12, 12, 12]
 width50 = [12, 12, 12, 12]
 widthTNB = [15, 15, 15, 15]
-open('Data\MolarChange\Results.txt', 'w').close()
+
+#clear the results file
+#open('Data\MolarChange\Results.txt', 'w').close()
 
 for i in folders:
     listofdir = listdir(i)
@@ -120,9 +124,11 @@ for i in folders:
         mstrain = abs(mstrain)
         for k in range(len(strain)):
             strain[k] = strain[k]+mstrain
-        #for plotting stress strain graph
+        #for plotting stress strain graph for each file uncomment below
         #bplot_graph2(strain, stress, file)
-        one_plotter(strain, stress, file)
+
+        #for plotting the singular file to rule them all uncomment below
+        #one_plotter(strain, stress, file)
         def results():
             ult_tens = calculate_ult_tens(stress)/(10**6)
             youngs = tangent_stiffness(strain, stress)
@@ -134,4 +140,6 @@ for i in folders:
             text_f.write('Toughness = ' + str(toughness)+ '\n')
             text_f.write('\n')
             text_f.close()
+        
+        #before uncommenting below to see the results remeber to clear the file, uncomment line 79
         #results()
