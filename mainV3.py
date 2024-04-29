@@ -12,7 +12,8 @@ def one_plotter(list1, list2, name):
     if len(list1) != len(list2):
         print("Error: Lists must have the same length.")
         return
-    color_lst = ['blue', 'green', 'red', 'yellow', 'black']
+    #color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
+    color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
     sig = name[17]
     if sig == '1':
         color = color_lst[0]
@@ -25,10 +26,10 @@ def one_plotter(list1, list2, name):
         label = '50mM'
     elif sig =='T':
         color = color_lst[3]
-        label = 'TNB'
+        label = 'Treated, not biomineralized'
     else:
         color = color_lst[4]
-        label = 'NT'
+        label = 'Not treated'
     if sig!='N' and sig!='T':
         if name[-5]=='1':
             plt.plot(list1, list2, label = label, color=color)
@@ -44,13 +45,13 @@ def one_plotter(list1, list2, name):
             plt.plot(list1, list2, label = label, color=color)
         else:
             plt.plot(list1, list2, color=color)
-    plt.xlabel('Strain')
-    plt.ylabel('Stress')
-    plt.title('Comparison')
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Stress[Pa]')
+    plt.title('Compressive test results for varying concentrations')
     plt.grid(True)
     if name == 'Data\MolarChange\\NBM\\nbm-s6.csv':
-        plt.legend(loc ="lower right")
-        plt.savefig('Data\MolarChange\To_bind_Them')
+        plt.legend(loc ="lower right", ncol = 2)
+        plt.savefig('Data\MolarChange\One_Graph')
 
 ftype = 'Data\MolarChange\\'
 f10 = ftype + '10mM\\'

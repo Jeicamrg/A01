@@ -34,7 +34,7 @@ if dtype=='C':
       ncforce.append(cforce[i])
       Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
 else:
-  print('No compliance')
+  #print('No compliance')
   ncforce = []
   ncdeformation = []
   for i in range(len(deformation)):
