@@ -141,7 +141,7 @@ def calculate_toughness(strain, stress):
   return area
 
 
-print(file)
-print('Youngs modulus = ', tangent_stiffness(strain, stress))
-print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
-print('Toughness = ', calculate_toughness(strain, stress)/1000000)
+#print(file)
+#print('Youngs modulus = ', tangent_stiffness(strain, stress))
+#print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
+#print('Toughness = ', calculate_toughness(strain, stress)/1000000)

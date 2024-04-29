@@ -1,0 +1,60 @@
+Data\MolarChange\20mM\20mMS1.csv
+Youngs modulus = 33.584535470745806
+Ultimate compression = 81.85611979874213
+Toughness = 1.0028643225008527
+
+Data\MolarChange\20mM\20mMS2.csv
+Youngs modulus = 31.72935370479228
+Ultimate compression = 83.84446065934067
+Toughness = 1.4872358165577415
+
+Data\MolarChange\20mM\20mMS3.csv
+Youngs modulus = 40.133621548798665
+Ultimate compression = 85.10592778645832
+Toughness = 1.3901102996728727
+
+Data\MolarChange\20mM\20mMS4.csv
+Youngs modulus = 40.69370118991098
+Ultimate compression = 84.23337441574417
+Toughness = 1.3944944348239
+
+Data\MolarChange\50mM\50mMS1.csv
+Youngs modulus = 47.50191252897371
+Ultimate compression = 92.1315595471698
+Toughness = 1.6376897046418664
+
+Data\MolarChange\50mM\50mMS2.csv
+Youngs modulus = 45.655127516510824
+Ultimate compression = 96.45136385836385
+Toughness = 1.7346107757150813
+
+Data\MolarChange\50mM\50mMS3.csv
+Youngs modulus = 78.00079918356231
+Ultimate compression = 103.06242625
+Toughness = 1.728254037470691
+
+Data\MolarChange\50mM\50mMS4.csv
+Youngs modulus = 90.05146912454863
+Ultimate compression = 89.72805798277983
+Toughness = 1.7021212892376738
+
+Data\MolarChange\TreatedButNotBiomineralized\S1T-nbm.csv
+Youngs modulus = 30.023098047366577
+Ultimate compression = 79.76860996226415
+Toughness = 0.8274956930849794
+
+Data\MolarChange\TreatedButNotBiomineralized\S2T-nbm.csv
+Youngs modulus = 46.66596916707449
+Ultimate compression = 71.24187389499389
+Toughness = 0.7587270814373922
+
+Data\MolarChange\TreatedButNotBiomineralized\S3T-nbm.csv
+Youngs modulus = 57.02713940136033
+Ultimate compression = 79.62742486979167
+Toughness = 0.7950788988145592
+
+Data\MolarChange\TreatedButNotBiomineralized\S4T-nbm.csv
+Youngs modulus = 52.11949128354213
+Ultimate compression = 76.79064686346865
+Toughness = 0.8251351747276592
+
