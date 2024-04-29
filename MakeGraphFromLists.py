@@ -45,8 +45,18 @@ def bplot_graph2(list1, list2, name):
     plt.plot(list1, list2)
     plt.xlabel('Strain[-]')
     plt.ylabel('Stress[Pa]')
-    plt.title('Stress Strain Graph '+(name))
+    if name[-10]=='\\':
+        new_name = name[-9:-4]
+    else:
+        new_name = name[-10:-4]
+    plt.title('Stress Strain Graph '+(new_name))
     plt.grid(True)
     
     plt.savefig(name + '.png')
     plt.clf()
+
+def one_plotter(list1, list2, name):
+    if len(list1) != len(list2):
+        print("Error: Lists must have the same length.")
+        return
+    

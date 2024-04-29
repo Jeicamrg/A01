@@ -18,7 +18,7 @@ if dtype=='C':
 elif dtype=='F':
   deformation, force, travel, crosshead, ttime = read_csv_file(file2)
 elif dtype=='T':
-  force, deformation, gtg, ttime = read_csv_file(file2)
+  force, gtg, deformation, ttime = read_csv_file(file2)
 else:
   print('You probably have the wrong folder')
 
@@ -141,7 +141,7 @@ def calculate_toughness(strain, stress):
   return area
 
 
-#print(file)
+
 #print('Youngs modulus = ', tangent_stiffness(strain, stress))
 #print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
 #print('Toughness = ', calculate_toughness(strain, stress)/1000000)
