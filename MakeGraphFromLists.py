@@ -55,8 +55,3 @@ def bplot_graph2(list1, list2, name):
     plt.savefig(name + '.png')
     plt.clf()
 
-def one_plotter(list1, list2, name):
-    if len(list1) != len(list2):
-        print("Error: Lists must have the same length.")
-        return
-    

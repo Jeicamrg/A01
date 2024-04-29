@@ -8,6 +8,31 @@ import matplotlib.pyplot as plt
 from os import listdir
 from mainV2 import calculate_ult_tens, tangent_stiffness, calculate_toughness
 
+def one_plotter(list1, list2, name):
+    if len(list1) != len(list2):
+        print("Error: Lists must have the same length.")
+        return
+    color_lst = ['blue', 'green', 'red', 'yellow', 'black']
+    sig = name[17]
+    if sig == '1':
+        color = color_lst[0]
+    elif sig =='2':
+        color = color_lst[1]
+    elif sig =='5':
+        color = color_lst[2]
+    elif sig =='T':
+        color = color_lst[3]
+    else:
+        color = color_lst[4]
+    plt.plot(list1, list2, color=color)
+    plt.xlabel('Strain')
+    plt.ylabel('Stress')
+    plt.title('Comparison')
+    plt.grid(True)
+    if name == 'Data\MolarChange\\NBM\\nbm-s6.csv':
+        plt.legend(['10mM', '20mM', '50mM', 'TNB', 'NT'], loc ="lower right")
+        plt.savefig('Data\MolarChange\To_bind_Them')
+
 ftype = 'Data\MolarChange\\'
 f10 = ftype + '10mM\\'
 f20 = ftype + '20mM\\'
@@ -15,6 +40,7 @@ f50 = ftype + '50mM\\'
 fTNB = ftype + 'TreatedButNotBiomineralized\\'
 fNBM = ftype + 'NBM\\'
 folders = [f10, f20, f50, fTNB, fNBM]
+
 #change the thicknesses and widths once available
 thickness10 = [2.65, 2.73, 2.56, 2.71]
 thickness20 = [2.65, 2.73, 2.56, 2.71] 
@@ -75,14 +101,17 @@ for i in folders:
         for k in range(len(strain)):
             strain[k] = strain[k]+mstrain
         #for plotting stress strain graph
-        bplot_graph2(strain, stress, file)
-        ult_tens = calculate_ult_tens(stress)/(10**6)
-        youngs = tangent_stiffness(strain, stress)
-        toughness = calculate_toughness(strain, stress)/(10**6)
-        text_f = open('Data\MolarChange\Results.txt', 'a')
-        text_f.write(file + '\n')
-        text_f.write('Youngs modulus = ' + str(youngs)+ '\n')
-        text_f.write('Ultimate compression = ' + str(ult_tens) + '\n')
-        text_f.write('Toughness = ' + str(toughness)+ '\n')
-        text_f.write('\n')
-        text_f.close()
+        #bplot_graph2(strain, stress, file)
+        one_plotter(strain, stress, file)
+        def results():
+            ult_tens = calculate_ult_tens(stress)/(10**6)
+            youngs = tangent_stiffness(strain, stress)
+            toughness = calculate_toughness(strain, stress)/(10**6)
+            text_f = open('Data\MolarChange\Results.txt', 'a')
+            text_f.write(file + '\n')
+            text_f.write('Youngs modulus = ' + str(youngs)+ '\n')
+            text_f.write('Ultimate compression = ' + str(ult_tens) + '\n')
+            text_f.write('Toughness = ' + str(toughness)+ '\n')
+            text_f.write('\n')
+            text_f.close()
+        #results()
