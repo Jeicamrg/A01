@@ -65,18 +65,18 @@ folders = [f10, f20, f50, fTNB, fNBM]
 
 #change the thicknesses and widths once available
 thickness10 = [2.65, 2.73, 2.56, 2.71]
-thickness20 = [2.65, 2.73, 2.56, 2.71] 
-thickness50 = [2.65, 2.73, 2.56, 2.71]
-thicknessTNB = [2.65, 2.73, 2.56, 2.71]
+thickness50 = [2.78, 2.91, 2.98, 2.73] 
+thickness20 = [2.73, 2.63, 2.63, 2.72]
+thicknessTNB = [2.5, 2.49, 2.52, 2.53]
 thicknessNBM = [2.69, 2.37, 2.36, 2.34]
 widthNBM = [15, 15, 15, 15]
 width10 = [15, 15, 15, 15]
-width20 = [12, 12, 12, 12]
-width50 = [12, 12, 12, 12]
-widthTNB = [15, 15, 15, 15]
+width50 = [12.1, 12.13, 12.07, 12.11]
+width20 = [12, 12.15, 12.1, 12.07]
+widthTNB = [11.97, 11.9, 11.91, 12.07]
 
 #clear the results file
-#open('Data\MolarChange\Results.txt', 'w').close()
+open('Data\MolarChange\Results.txt', 'w').close()
 
 for i in folders:
     listofdir = listdir(i)
@@ -93,19 +93,20 @@ for i in folders:
             ncdeformation.append(cdeformation[k])
             ncforce.append(cforce[k])
             Compliance_funct = interpolate.interp1d(ncforce, ncdeformation, kind='linear', fill_value='extrapolate')
-    if i==f10:
+    checker = i[-5]
+    if checker=='1':
        thickness_lst = thickness10
        width_lst = width10
-    if i==fNBM:
+    if checker=='\\':
        thickness_lst = thicknessNBM
        width_lst = widthNBM
-    if i==f20:
+    if checker=='2':
        thickness_lst = thickness20
        width_lst = width20
-    elif i==f50:
+    elif checker=='5':
        thickness_lst=thickness50
        width_lst = width50
-    else:
+    elif checker =='i':
        thickness_lst=thicknessTNB
        width_lst = widthTNB
     for j in range(4):
@@ -113,6 +114,7 @@ for i in folders:
         deformation, force, travel, sg1, ttime = read_csv_file(file)
         t = thickness_lst[j]
         width = width_lst[j]
+        #print(file[-10:-4], width, t)
         A = (width/1000)*t/1000#m^2 
         original_l = 0.14 #m
         stress = []
@@ -128,7 +130,7 @@ for i in folders:
         #bplot_graph2(strain, stress, file)
 
         #for plotting the singular file to rule them all uncomment below
-        #one_plotter(strain, stress, file)
+        one_plotter(strain, stress, file)
         def results():
             ult_tens = calculate_ult_tens(stress)/(10**6)
             youngs = tangent_stiffness(strain, stress)
@@ -142,4 +144,4 @@ for i in folders:
             text_f.close()
         
         #before uncommenting below to see the results remeber to clear the file, uncomment line 79
-        #results()
+        results()

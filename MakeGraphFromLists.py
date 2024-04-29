@@ -54,4 +54,5 @@ def bplot_graph2(list1, list2, name):
     
     plt.savefig(name + '.png')
     plt.clf()
+    plt.cla()
 
