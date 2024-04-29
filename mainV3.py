@@ -63,7 +63,6 @@ fTNB = ftype + 'TreatedButNotBiomineralized\\'
 fNBM = ftype + 'NBM\\'
 folders = [f10, f20, f50, fTNB, fNBM]
 
-#change the thicknesses and widths once available
 thickness10 = [2.65, 2.73, 2.56, 2.71]
 thickness50 = [2.78, 2.91, 2.98, 2.73] 
 thickness20 = [2.73, 2.63, 2.63, 2.72]
@@ -76,7 +75,7 @@ width20 = [12, 12.15, 12.1, 12.07]
 widthTNB = [11.97, 11.9, 11.91, 12.07]
 
 #clear the results file
-open('Data\MolarChange\Results.txt', 'w').close()
+#open('Data\MolarChange\Results.txt', 'w').close()
 
 for i in folders:
     listofdir = listdir(i)
@@ -130,7 +129,7 @@ for i in folders:
         #bplot_graph2(strain, stress, file)
 
         #for plotting the singular file to rule them all uncomment below
-        one_plotter(strain, stress, file)
+        #one_plotter(strain, stress, file)
         def results():
             ult_tens = calculate_ult_tens(stress)/(10**6)
             youngs = tangent_stiffness(strain, stress)
@@ -143,5 +142,5 @@ for i in folders:
             text_f.write('\n')
             text_f.close()
         
-        #before uncommenting below to see the results remeber to clear the file, uncomment line 79
-        results()
+        #before uncommenting below to see the results remeber to clear the file, uncomment line 78
+        #results()
