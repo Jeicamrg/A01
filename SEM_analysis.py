@@ -13,6 +13,22 @@ def axis_image(file):
 
     return width,height
 
+def remove_outliers(data):
+
+    q1 = np.percentile(data, 25)
+    q3 = np.percentile(data, 75)
+    
+
+    iqr = q3 - q1
+    
+    lower_bound = q1 - 1.5 * iqr
+    upper_bound = q3 + 1.5 * iqr
+    
+
+    data_no_outliers = [x for x in data if lower_bound <= x <= upper_bound]
+    
+    return data_no_outliers
+
 def nearest_neighbor_analysis(x_coords, y_coords):
 
     points = np.column_stack((x_coords, y_coords))
@@ -139,6 +155,9 @@ def measure(path,path2):
                 density2.append(density)
                 for i in mineral:
                     concentration_lst2.append(i)
+                    
+            
+            
             
             densities.append(density2)
             concentration_lst.append(concentration_lst2)
@@ -149,7 +168,7 @@ def measure(path,path2):
 
 def get_info(lst,lst2,lst3):
     final_data = []
-
+    sizes = []
     for i in lst:
         idx = lst.index(i)
         area_perc = sum(lst[idx])/sum(lst2[idx])*100
@@ -158,8 +177,19 @@ def get_info(lst,lst2,lst3):
         final_data.append([idx,area_perc,count,density])
         
         boxplot(i,idx)
+        running_sum = 0
+        #sizes2 = []
+        #for j,num in enumerate(i,start=1):
+            
+            #running_sum += num  
+            #average = running_sum/j
+            #sizes2.append(average)
+            
+        #sizes.append(sizes2)
         
-    return final_data
+    sizes = lst
+        
+    return final_data,sizes
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -168,6 +198,15 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 path1 = os.path.join(script_dir, "Actual_images")
 path2 = os.path.join(script_dir, "Data_SEM")
 
-print(get_info(measure(path1,path2)[0],measure(path1,path2)[1],measure(path1,path2)[2]))
+Final_data = get_info(measure(path1,path2)[0],measure(path1,path2)[1],measure(path1,path2)[2])
+print(Final_data[0])
 
 
+X_10 = np.arange(0,len(remove_outliers(Final_data[1][0])),1)
+X_20 = np.arange(0,len(remove_outliers(Final_data[1][1])),1)
+X_50 = np.arange(0,len(remove_outliers(Final_data[1][2])),1)
+
+plt.plot(X_10,sorted(remove_outliers(Final_data[1][0]), reverse=True),color = 'blue')
+plt.plot(X_20,sorted(remove_outliers(Final_data[1][1]),reverse=True),color = 'red')
+plt.plot(X_50,sorted(remove_outliers(Final_data[1][2]),reverse=True),color = 'green')
+plt.show()
