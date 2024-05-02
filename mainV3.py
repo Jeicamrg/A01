@@ -64,10 +64,20 @@ fNBM = ftype + 'NBM\\'
 folders = [f10, f20, f50, fTNB, fNBM]
 
 thickness10 = [2.65, 2.73, 2.56, 2.71]
+avg_strain10=[]
+avg_stress10=[]
 thickness50 = [2.78, 2.91, 2.98, 2.73] 
+avg_strain50=[]
+avg_stress50=[]
 thickness20 = [2.73, 2.63, 2.63, 2.72]
+avg_strain20=[]
+avg_stress20=[]
 thicknessTNB = [2.5, 2.49, 2.52, 2.53]
+avg_strainTNB=[]
+avg_stressTNB=[]
 thicknessNBM = [2.69, 2.37, 2.36, 2.34]
+avg_strainNBM=[]
+avg_stressNBM=[]
 widthNBM = [15, 15, 15, 15]
 width10 = [15, 15, 15, 15]
 width50 = [12.1, 12.13, 12.07, 12.11]
@@ -125,11 +135,114 @@ for i in folders:
         mstrain = abs(mstrain)
         for k in range(len(strain)):
             strain[k] = strain[k]+mstrain
+        def averages():
+            if checker=='1':
+                if len(avg_strain10)>=len(strain):
+                    for o in range(len(strain)):
+                        avg_strain10[o]+=strain[o]
+                else:
+                    alen=len(avg_strain10)
+                    for o in range(len(avg_strain10)):
+                        avg_strain10[o]+=strain[o]
+                    for p in range(len(strain)-len(avg_strain10)):
+                        avg_strain10.append(strain[alen+p])
+                if len(avg_stress10)>=len(stress):
+                    for o in range(len(stress)):
+                        avg_stress10[o]+=stress[o]
+                else:
+                    alen=len(avg_stress10)
+                    for o in range(len(avg_stress10)):
+                        avg_stress10[o]+=stress[o]
+                    for p in range(len(stress)-len(avg_stress10)):
+                        avg_stress10.append(stress[alen+p])
+            if checker=='\\':
+                if len(avg_strainNBM)>=len(strain):
+                    for o in range(len(strain)):
+                        avg_strainNBM[o]+=strain[o]
+                else:
+                    alen = len(avg_strainNBM)
+                    for o in range(len(avg_strainNBM)):
+                        avg_strainNBM[o]+=strain[o]
+                    for p in range(len(strain)-len(avg_strainNBM)):
+                        avg_strainNBM.append(strain[alen+p])
+                if len(avg_stressNBM)>=len(stress):
+                    for o in range(len(stress)):
+                        avg_stressNBM[o]+=stress[o]
+                else:
+                    alen = len(avg_stressNBM)
+                    for o in range(len(avg_stressNBM)):
+                        avg_stressNBM[o]+=stress[o]
+                    for p in range(len(stress)-len(avg_stressNBM)):
+                        avg_stressNBM.append(stress[alen+p])
+            if checker=='2':
+                if len(avg_strain20)>=len(strain):
+                    for o in range(len(strain)):
+                        avg_strain20[o]+=strain[o]
+                else:
+                    alen = len(avg_strain20)
+                    for o in range(len(avg_strain20)):
+                        avg_strain20[o]+=strain[o]
+                    for p in range(len(strain)-len(avg_strain20)):
+                        avg_strain20.append(strain[alen+p])
+                if len(avg_stress20)>=len(stress):
+                    for o in range(len(stress)):
+                        avg_stress20[o]+=stress[o]
+                else:
+                    alen = len(avg_stress20)
+                    for o in range(len(avg_stress20)):
+                        avg_stress20[o]+=stress[o]
+                    for p in range(len(stress)-len(avg_stress20)):
+                        avg_stress20.append(stress[alen+p])
+            elif checker=='5':
+                if len(avg_strain50)>=len(strain):
+                    for o in range(len(strain)):
+                        avg_strain50[o]+=strain[o]
+                else:
+                    alen = len(avg_strain50)
+                    for o in range(len(avg_strain50)):
+                        avg_strain50[o]+=strain[o]
+                    for p in range(len(strain)-len(avg_strain50)):
+                        avg_strain50.append(strain[alen+p])
+                if len(avg_stress50)>=len(stress):
+                    for o in range(len(stress)):
+                        avg_stress50[o]+=stress[o]
+                else:
+                    alen = len(avg_stress50)
+                    for o in range(len(avg_stress50)):
+                        avg_stress50[o]+=stress[o]
+                    for p in range(len(stress)-len(avg_stress50)):
+                        avg_stress50.append(stress[alen+p])
+            elif checker =='i':
+                if len(avg_strainTNB)>=len(strain):
+                    for o in range(len(strain)):
+                        avg_strainTNB[o]+=strain[o]
+                else:
+                    alen = len(avg_strainTNB)
+                    for o in range(len(avg_strainTNB)):
+                        avg_strainTNB[o]+=strain[o]
+                    for p in range(len(strain)-len(avg_strainTNB)):
+                        avg_strainTNB.append(strain[alen+p])
+                if len(avg_stressTNB)>=len(stress):
+                    for o in range(len(stress)):
+                        avg_stressTNB[o]+=stress[o]
+                else:
+                    alen = len(avg_stressTNB)
+                    for o in range(len(avg_stressTNB)):
+                        avg_stressTNB[o]+=stress[o]
+                    for p in range(len(stress)-len(avg_stressTNB)):
+                        avg_stressTNB.append(stress[alen+p])
+
+        #comment the following line and change to false if you don't want average graphs
+        averages()
+        averages_true = True
+
         #for plotting stress strain graph for each file uncomment below
         #bplot_graph2(strain, stress, file)
 
         #for plotting the singular file to rule them all uncomment below
-        one_plotter(strain, stress, file)
+        #one_plotter(strain, stress, file)
+
+        #for plotting only specific graphs
         #sig = file[17]
         #if sig=='1' or sig=='N':
         #    one_plotter(strain, stress, file)
@@ -145,5 +258,61 @@ for i in folders:
             text_f.write('\n')
             text_f.close()
         
-        #before uncommenting below to see the results remeber to clear the file, uncomment line 78
+        #before uncommenting below to see the results remeber to clear the file, uncomment line 88
         #results()
+
+
+if averages_true:
+    #the colors below are the teal color palette Dennis is using
+    color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
+    #the colors below are a nice palette imho MG
+    #color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
+    label_lst = ['10mM', '20mM', '50mM', 'Treated, not biomineralized', 'Not treated']
+    avg_strain10=np.array(avg_strain10)/4
+    for i in range(len(avg_strain10)):
+        if avg_strain10[i+1]<avg_strain10[i]:
+            avg_strain10=avg_strain10[:i]
+            avg_stress10=avg_stress10[:i]
+            break
+    avg_stress10=np.array(avg_stress10)/4
+    avg_strain20=np.array(avg_strain20)/4
+    for i in range(len(avg_strain20)):
+        if avg_strain20[i+1]<avg_strain20[i]:
+            avg_strain20=avg_strain20[:i]
+            avg_stress20=avg_stress20[:i]
+            break
+    avg_stress20=np.array(avg_stress20)/4
+    avg_strain50=np.array(avg_strain50)/4
+    for i in range(len(avg_strain50)):
+        if avg_strain50[i+1]<avg_strain50[i]:
+            avg_strain50=avg_strain50[:i]
+            avg_stress50=avg_stress50[:i]
+            break
+    avg_stress50=np.array(avg_stress50)/4
+    avg_strainNBM=np.array(avg_strainNBM)/4
+    for i in range(len(avg_strainNBM)):
+        if avg_strainNBM[i+1]<avg_strainNBM[i]:
+            avg_strainNBM=avg_strainNBM[:i]
+            avg_stressNBM=avg_stressNBM[:i]
+            break
+    avg_stressNBM=np.array(avg_stressNBM)/4
+    avg_strainTNB=np.array(avg_strainTNB)/4
+    for i in range(len(avg_strainTNB)):
+        if avg_strainTNB[i+1]<avg_strainTNB[i]:
+            avg_strainTNB=avg_strainTNB[:i]
+            avg_stressTNB=avg_stressTNB[:i]
+            break
+    avg_stressTNB=np.array(avg_stressTNB)/4
+
+    #comment or uncomment the following 5 lines depending on what you would like the graph to look like
+    plt.plot(avg_strain10, avg_stress10, label = label_lst[0], color = color_lst[0])
+    #plt.plot(avg_strain20, avg_stress20, label = label_lst[1], color = color_lst[1])
+    #plt.plot(avg_strain50, avg_stress50, label = label_lst[2], color = color_lst[2])
+    #plt.plot(avg_strainTNB, avg_stressTNB, label = label_lst[3], color = color_lst[3])
+    plt.plot(avg_strainNBM, avg_stressNBM, label = label_lst[4], color = color_lst[4])
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Stress[Pa]')
+    plt.title('Stress Strain Graph Averages')
+    plt.grid(True)
+    plt.legend(loc ="lower right", ncol = 2)
+    plt.savefig('Averages')
