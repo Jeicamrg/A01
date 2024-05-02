@@ -210,7 +210,7 @@ plt.plot(X_10,sorted(remove_outliers(Final_data[1][0]), reverse=True),color = '#
 plt.plot(X_20,sorted(remove_outliers(Final_data[1][1]),reverse=True),color = '#56B4E9',label='20mM')
 plt.plot(X_50,sorted(remove_outliers(Final_data[1][2]),reverse=True),color = '#009E73',label='50mM')
 plt.xlabel('Particle Count')
-plt.ylabel('Particle Size [$\mu$m]')
+plt.ylabel('Particle Diameter [$\mu$m]')
 
 plt.legend(loc='upper right')
 plt.grid(True)
