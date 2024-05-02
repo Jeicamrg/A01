@@ -44,7 +44,7 @@ def nearest_neighbor_analysis(x_coords, y_coords):
     distances, _ = tree.query(points, k=2)
     
  
-    mean_nn_distance = np.mean(distances[:, 1]) 
+    mean_nn_distance = np.mean(distances[:, 1])
     
     return mean_nn_distance
 
@@ -181,7 +181,8 @@ def get_info(lst,lst2,lst3):
         area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
         count = len(i)
         density = np.mean(lst3[idx]) 
-        final_data.append([idx,area_perc,count,density])
+        avg = np.mean(i)
+        final_data.append([idx,area_perc,count,density,avg])
         
         boxplot(i,idx)
         
