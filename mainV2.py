@@ -67,7 +67,6 @@ A = 0.015*t/1000#m^2
 original_l = 0.14 #m
 stress = []
 strain = []
-
 for j in range(len(deformation)):
   strain.append((deformation[j]-Compliance_funct(force[j]))/(original_l*1000))
   stress.append(force[j]/(A))
@@ -75,8 +74,10 @@ mstrain = min(strain)
 mstrain = abs(mstrain)
 for k in range(len(strain)):
   strain[k] = strain[k]+mstrain
-
-#for plotting stress strain grph
+zero_strain = strain[0]
+for i in range(len(strain)):
+  strain[i]-=zero_strain
+#for plotting stress strain graph
 bplot_graph(strain, stress, file, ftype)
 
 
@@ -117,7 +118,7 @@ def tangent_stiffness(strain, stress):
     plt.savefig('Tangents' +'.png')
   #tanplot()
   max_tan = max(tangent_lines)/(10**9)#convert to GPa
-
+  
   #for plotting the Young's modulus to make sure it makes sense
   def sanity_check():
     sanity=[]
@@ -140,8 +141,38 @@ def calculate_toughness(strain, stress):
   area = np.trapz(stress,strain)
   return area
 
+def new_stiffness(strain, stress):
+  in_strain = strain[0]
+  fi_strain = in_strain+0.003
+  dx = fi_strain-in_strain
+  #activate for tension
+  def double_checker():
+    for i in range(len(strain)):
+      for j in range(i):
+        if strain[i]==strain[j]:
+          strain[i]+=0.0000000001
+    return(strain)
+  strain = double_checker()
+  stress_funct = interpolate.interp1d(strain, stress, kind='cubic', fill_value='extrapolate')
+  in_stress = stress[0]
+  fi_stress = stress_funct(fi_strain)
+  dy = fi_stress-in_stress
+  E = (dy/dx)/(10**9)
+  def sanity_check():
+    sanity=[]
+    for i in range(len(strain)-1):
+      sanity.append(E*(10**9)*strain[i])
+    tot_len = int(((len(strain)/3)+1))
+    plt.plot(strain[11:tot_len], sanity[10:tot_len-1])
+    plt.plot(strain, stress)
+    plt.xlabel('Strain[-]')
+    plt.ylabel('Young\'s Modulus [Pa]')
+    plt.title('Young\'s Modulus Strain Graph')
+    plt.grid(True)
+    plt.savefig('Sanity' +'.png')
+  #sanity_check()
+  return(E)
 
-
-#print('Youngs modulus = ', tangent_stiffness(strain, stress))
+print('Youngs modulus = ', new_stiffness(strain, stress))
 #print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
 #print('Toughness = ', calculate_toughness(strain, stress)/1000000)

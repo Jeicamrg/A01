@@ -1,100 +1,100 @@
 Data\MolarChange\10mM\bm-s1.csv
-Youngs modulus = 45.65500766898811
+Youngs modulus = 27.21807521417882
 Ultimate compression = 110.30969929559748
 Toughness = 1.8176700602910145
 
 Data\MolarChange\10mM\bm-s2.csv
-Youngs modulus = 48.059289709059364
+Youngs modulus = 24.75204498777873
 Ultimate compression = 108.07972517704518
 Toughness = 1.7272454886045923
 
 Data\MolarChange\10mM\bm-s3.csv
-Youngs modulus = 40.145713657484634
+Youngs modulus = 25.430458692308882
 Ultimate compression = 111.44255320312502
 Toughness = 1.3196886408714108
 
 Data\MolarChange\10mM\bm-s4.csv
-Youngs modulus = 40.03017889732238
+Youngs modulus = 23.343845378373285
 Ultimate compression = 110.79773023370234
 Toughness = 1.3130860045474828
 
 Data\MolarChange\20mM\20mMS1.csv
-Youngs modulus = 40.75046657393627
+Youngs modulus = 24.582139729574155
 Ultimate compression = 99.32175708180708
 Toughness = 1.2168454462579028
 
 Data\MolarChange\20mM\20mMS2.csv
-Youngs modulus = 40.6614728508113
+Youngs modulus = 23.575471539715114
 Ultimate compression = 107.44748514293761
 Toughness = 1.9059070455816713
 
 Data\MolarChange\20mM\20mMS3.csv
-Youngs modulus = 48.42821441956647
+Youngs modulus = 21.51657895701856
 Ultimate compression = 102.6951458693398
 Toughness = 1.6774105366382277
 
 Data\MolarChange\20mM\20mMS4.csv
-Youngs modulus = 50.38619551908835
+Youngs modulus = 23.162390029777477
 Ultimate compression = 104.29622148983867
 Toughness = 1.726637469406146
 
 Data\MolarChange\50mM\50mMS1.csv
-Youngs modulus = 56.1329752965902
+Youngs modulus = 21.91309530325229
 Ultimate compression = 108.87179653962782
 Toughness = 1.9352567263069804
 
 Data\MolarChange\50mM\50mMS2.csv
-Youngs modulus = 52.96508533841894
+Youngs modulus = 21.110424198022404
 Ultimate compression = 111.89443542606865
 Toughness = 2.012343689796182
 
 Data\MolarChange\50mM\50mMS3.csv
-Youngs modulus = 83.27348544699302
+Youngs modulus = 20.914409948228943
 Ultimate compression = 110.02922460145791
 Toughness = 1.8450802933357016
 
 Data\MolarChange\50mM\50mMS4.csv
-Youngs modulus = 30.538592087641053
+Youngs modulus = 23.526971771238628
 Ultimate compression = 110.32705562260476
 Toughness = 2.0928796897642017
 
 Data\MolarChange\TreatedButNotBiomineralized\S1T-nbm.csv
-Youngs modulus = 39.88030567695319
+Youngs modulus = 22.179349186515132
 Ultimate compression = 105.95830395989975
 Toughness = 1.0991797426943337
 
 Data\MolarChange\TreatedButNotBiomineralized\S2T-nbm.csv
-Youngs modulus = 64.49230324294501
+Youngs modulus = 26.035858619517807
 Ultimate compression = 98.45616874219566
 Toughness = 1.048559751100577
 
 Data\MolarChange\TreatedButNotBiomineralized\S3T-nbm.csv
-Youngs modulus = 72.96263487439613
+Youngs modulus = 26.149351772730896
 Ultimate compression = 101.87827739128117
 Toughness = 1.0172533989870813
 
 Data\MolarChange\TreatedButNotBiomineralized\S4T-nbm.csv
-Youngs modulus = 69.37978133733064
+Youngs modulus = 22.337510019783437
 Ultimate compression = 102.22122582039552
 Toughness = 1.0983932610719207
 
 Data\MolarChange\NBM\nbm-s2.csv
-Youngs modulus = 27.59862828260143
+Youngs modulus = 22.24661289454277
 Ultimate compression = 88.14902681536556
 Toughness = 0.8013489748852535
 
 Data\MolarChange\NBM\nbm-s4.csv
-Youngs modulus = 39.23930628186786
+Youngs modulus = 25.64709930431476
 Ultimate compression = 96.88857023909988
 Toughness = 0.8451222051137723
 
 Data\MolarChange\NBM\nbm-s5.csv
-Youngs modulus = 48.61144964158222
+Youngs modulus = 25.314483873507424
 Ultimate compression = 99.57454703389833
 Toughness = 0.8922838472323487
 
 Data\MolarChange\NBM\nbm-s6.csv
-Youngs modulus = 40.46932306119787
+Youngs modulus = 19.230582443433203
 Ultimate compression = 96.32311002849004
 Toughness = 0.8698197667933629
 

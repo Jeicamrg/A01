@@ -6,7 +6,7 @@ import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 from os import listdir
-from mainV2 import calculate_ult_tens, tangent_stiffness, calculate_toughness
+from mainV2 import calculate_ult_tens, tangent_stiffness, calculate_toughness, new_stiffness
 
 def one_plotter(list1, list2, name):
     if len(list1) != len(list2):
@@ -15,7 +15,9 @@ def one_plotter(list1, list2, name):
     #the colors below are the teal color palette Dennis is using
     #color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
     #the colors below are a nice palette imho MG
-    color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
+    #color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
+    #the colors below are good for the color blind
+    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2']
     sig = name[17]
     if sig == '1':
         color = color_lst[0]
@@ -85,7 +87,7 @@ width20 = [12, 12.15, 12.1, 12.07]
 widthTNB = [11.97, 11.9, 11.91, 12.07]
 
 #clear the results file
-#open('Data\MolarChange\Results.txt', 'w').close()
+open('Data\MolarChange\Results.txt', 'w').close()
 
 for i in folders:
     listofdir = listdir(i)
@@ -233,8 +235,8 @@ for i in folders:
                         avg_stressTNB.append(stress[alen+p])
 
         #comment the following line and change to false if you don't want average graphs
-        averages()
-        averages_true = True
+        #averages()
+        averages_true = False
 
         #for plotting stress strain graph for each file uncomment below
         #bplot_graph2(strain, stress, file)
@@ -248,7 +250,7 @@ for i in folders:
         #    one_plotter(strain, stress, file)
         def results():
             ult_tens = calculate_ult_tens(stress)/(10**6)
-            youngs = tangent_stiffness(strain, stress)
+            youngs = new_stiffness(strain, stress)
             toughness = calculate_toughness(strain, stress)/(10**6)
             text_f = open('Data\MolarChange\Results.txt', 'a')
             text_f.write(file + '\n')
@@ -259,14 +261,16 @@ for i in folders:
             text_f.close()
         
         #before uncommenting below to see the results remeber to clear the file, uncomment line 88
-        #results()
+        results()
 
 
 if averages_true:
     #the colors below are the teal color palette Dennis is using
-    color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
+    #color_lst = ['#b5d1ae', '#80ae9a', '#568b87', '#1b485e', '#122740']
     #the colors below are a nice palette imho MG
     #color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
+    #the colors below are good for the color blind
+    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2']
     label_lst = ['10mM', '20mM', '50mM', 'Treated, not biomineralized', 'Not treated']
     avg_strain10=np.array(avg_strain10)/4
     for i in range(len(avg_strain10)):
@@ -306,13 +310,13 @@ if averages_true:
 
     #comment or uncomment the following 5 lines depending on what you would like the graph to look like
     plt.plot(avg_strain10, avg_stress10, label = label_lst[0], color = color_lst[0])
-    #plt.plot(avg_strain20, avg_stress20, label = label_lst[1], color = color_lst[1])
-    #plt.plot(avg_strain50, avg_stress50, label = label_lst[2], color = color_lst[2])
-    #plt.plot(avg_strainTNB, avg_stressTNB, label = label_lst[3], color = color_lst[3])
+    plt.plot(avg_strain20, avg_stress20, label = label_lst[1], color = color_lst[1])
+    plt.plot(avg_strain50, avg_stress50, label = label_lst[2], color = color_lst[2])
+    plt.plot(avg_strainTNB, avg_stressTNB, label = label_lst[3], color = color_lst[3])
     plt.plot(avg_strainNBM, avg_stressNBM, label = label_lst[4], color = color_lst[4])
     plt.xlabel('Strain[-]')
     plt.ylabel('Stress[Pa]')
-    plt.title('Stress Strain Graph Averages')
+    plt.title('Stress Strain Graph Averages for Compression')
     plt.grid(True)
     plt.legend(loc ="lower right", ncol = 2)
     plt.savefig('Averages')
