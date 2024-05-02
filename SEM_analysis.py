@@ -5,6 +5,11 @@ from PIL import Image
 from scipy.spatial import cKDTree
 import os
 
+
+conversion = 1174664.587/25400
+
+
+
 def axis_image(file):
     image = Image.open(file)
     width,height = image.size
@@ -134,6 +139,7 @@ def measure(path,path2):
     sizes = []
     densities = []
     lst = get_data(path2)
+    
     for folder in os.listdir(path):
         folder_path = os.path.join(path, folder)
         
@@ -154,6 +160,7 @@ def measure(path,path2):
                 density,mineral = area(lst[idx][idx2],3000,10,size,file_path)
                 density2.append(density)
                 for i in mineral:
+                    i = i/conversion
                     concentration_lst2.append(i)
                     
             
@@ -171,21 +178,13 @@ def get_info(lst,lst2,lst3):
     sizes = []
     for i in lst:
         idx = lst.index(i)
-        area_perc = sum(lst[idx])/sum(lst2[idx])*100
+        area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
         count = len(i)
         density = np.mean(lst3[idx]) 
         final_data.append([idx,area_perc,count,density])
         
         boxplot(i,idx)
-        running_sum = 0
-        #sizes2 = []
-        #for j,num in enumerate(i,start=1):
-            
-            #running_sum += num  
-            #average = running_sum/j
-            #sizes2.append(average)
-            
-        #sizes.append(sizes2)
+        
         
     sizes = lst
         
@@ -202,11 +201,17 @@ Final_data = get_info(measure(path1,path2)[0],measure(path1,path2)[1],measure(pa
 print(Final_data[0])
 
 
+
 X_10 = np.arange(0,len(remove_outliers(Final_data[1][0])),1)
 X_20 = np.arange(0,len(remove_outliers(Final_data[1][1])),1)
 X_50 = np.arange(0,len(remove_outliers(Final_data[1][2])),1)
 
-plt.plot(X_10,sorted(remove_outliers(Final_data[1][0]), reverse=True),color = 'blue')
-plt.plot(X_20,sorted(remove_outliers(Final_data[1][1]),reverse=True),color = 'red')
-plt.plot(X_50,sorted(remove_outliers(Final_data[1][2]),reverse=True),color = 'green')
-plt.show()
+plt.plot(X_10,sorted(remove_outliers(Final_data[1][0]), reverse=True),color = '#E69F00',label='10mM')
+plt.plot(X_20,sorted(remove_outliers(Final_data[1][1]),reverse=True),color = '#56B4E9',label='20mM')
+plt.plot(X_50,sorted(remove_outliers(Final_data[1][2]),reverse=True),color = '#009E73',label='50mM')
+plt.xlabel('Particle Count')
+plt.ylabel('Particle Size [$\mu$m]')
+
+plt.legend(loc='upper right')
+plt.grid(True)
+plt.show() 
