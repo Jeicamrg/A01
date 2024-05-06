@@ -93,8 +93,8 @@ def boxplot(lst,ind):
     
     plt.boxplot(lst, showfliers=False)
 
-    plt.ylabel('Mineral Area (#pixels)')
-
+    plt.ylabel('Mineral Diameter [$\mu$m]')
+    
     plt.show()
    
 
@@ -159,6 +159,7 @@ def measure(path,path2):
                 sizes2.append(size)
                 density,mineral = area(lst[idx][idx2],3000,10,size,file_path)
                 density2.append(density)
+                
                 for i in mineral:
                     i = i/conversion
                     concentration_lst2.append(i)
@@ -176,17 +177,44 @@ def measure(path,path2):
 def get_info(lst,lst2,lst3):
     final_data = []
     sizes = []
+
     for i in lst:
         idx = lst.index(i)
+        print(min(i))
+        
+        
         area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
         count = len(remove_outliers(i))
         density = np.mean(lst3[idx]) 
         avg = np.mean(i)
         final_data.append([idx,area_perc,count,density,avg])
+
+        rounded_list = [round(x/0.5)*0.5 for x in i]
+        print(np.mean(rounded_list))
         
-        boxplot(i,idx)
+        value_counts = {}
+        for value in rounded_list:
+            if value in value_counts:
+                value_counts[value] += 1
+            else:
+                value_counts[value] = 1
+                
+        
+
+        # Extract values and counts
+        values = list(value_counts.keys())
+        counts = list(value_counts.values())
+        
+        counts = standardize(counts, np.std(counts), np.mean(counts))
         
         
+        plt.hist(i,bins=100,density=False)
+        plt.xlabel('Particle Size [$\mu$m]')
+        plt.ylabel('Count')
+        plt.show()
+    boxplot(lst,idx)
+    
+     
     sizes = lst
         
     return final_data,sizes
