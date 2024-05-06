@@ -179,7 +179,7 @@ def get_info(lst,lst2,lst3):
     for i in lst:
         idx = lst.index(i)
         area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
-        count = len(i)
+        count = len(remove_outliers(i))
         density = np.mean(lst3[idx]) 
         avg = np.mean(i)
         final_data.append([idx,area_perc,count,density,avg])
