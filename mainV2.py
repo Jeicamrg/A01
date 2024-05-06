@@ -78,7 +78,7 @@ zero_strain = strain[0]
 for i in range(len(strain)):
   strain[i]-=zero_strain
 #for plotting stress strain graph
-bplot_graph(strain, stress, file, ftype)
+#gbplot_graph(strain, stress, file, ftype)
 
 
 #############################################################################################################
@@ -173,6 +173,6 @@ def new_stiffness(strain, stress):
   #sanity_check()
   return(E)
 
-print('Youngs modulus = ', new_stiffness(strain, stress))
+#print('Youngs modulus = ', new_stiffness(strain, stress))
 #print('Ult tens = ', calculate_ult_tens(stress)/(10**6))
 #print('Toughness = ', calculate_toughness(strain, stress)/1000000)
