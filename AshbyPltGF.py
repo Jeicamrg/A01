@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Ellipse
 
 # Input data
-Density = [1800, 1712, 1800, 1830, 1643, 1920] #kg/m^3
-E_Modulus = [30.9, 54.5, 39.065, 37.97, 27.97, 15.32] #GPa, Tensile Modulus
+Density = [1800, 1712, 1800, 1830, 1643, 1920, 1880] #kg/m^3
+E_Modulus = [30.9, 54.5, 39.065, 37.97, 27.97, 15.32, 72.19] #GPa, Tensile Modulus
 Biom_Density = [1976.8,1829.1,1912.3, 1696.2] #kg/m^3
 Biom_Emod = [45.655008, 48.05929, 40.14571, 40.03018]#GPa, Tensile Modulus
 Non_Biom_Density = [2500.5, 2436.4, 2505.7, 2407.2] #kg/m^3
