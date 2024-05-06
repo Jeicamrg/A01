@@ -176,6 +176,7 @@ def measure(path,path2):
 def get_info(lst,lst2,lst3):
     final_data = []
     sizes = []
+
     for i in lst:
         idx = lst.index(i)
         area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
@@ -183,9 +184,26 @@ def get_info(lst,lst2,lst3):
         density = np.mean(lst3[idx]) 
         avg = np.mean(i)
         final_data.append([idx,area_perc,count,density,avg])
+
+        #rounded_list = [round(x/0.2)*0.2 for x in i]
+
         
-        boxplot(i,idx)
+        value_counts = {}
+        for value in i:
+            if value in value_counts:
+                value_counts[value] += 1
+            else:
+                value_counts[value] = 1
+
+        # Extract values and counts
+        values = list(value_counts.keys())
+        counts = list(value_counts.values())
         
+        plt.bar(values, counts)
+        plt.xlabel('Particle Size [$\mu$m]')
+        plt.ylabel('Count')
+        
+        plt.show()
         
     sizes = lst
         
