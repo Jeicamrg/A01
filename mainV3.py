@@ -17,7 +17,10 @@ def one_plotter(list1, list2, name):
     #the colors below are a nice palette imho MG
     #color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
     #the colors below are good for the color blind
-    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2']
+    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#000000', '#0072B2']
+    avg_lst = [110.1574, 103.4402, 110.2806, 102.1285, 95.2338]
+    for an_avg in range(len(avg_lst)):
+        avg_lst[an_avg] = avg_lst[an_avg]*(10**6)
     sig = name[17]
     if sig == '1':
         color = color_lst[0]
@@ -51,9 +54,11 @@ def one_plotter(list1, list2, name):
             plt.plot(list1, list2, color=color)
     plt.xlabel('Strain[-]')
     plt.ylabel('Stress[Pa]')
-    plt.title('Compressive test results for varying concentrations')
     plt.grid(True)
     if name == 'Data\MolarChange\\NBM\\nbm-s6.csv':
+        for anumber in range(len(avg_lst)):
+            plt.axhline(avg_lst[anumber], color = color_lst[anumber], linestyle = 'dashed')
+            plt.text(x = 0.01+(anumber)*0.0025, y =avg_lst[anumber]+2000000, s =(r'$\bar{\sigma}$'+' = ' + str(round(avg_lst[anumber]/(10**8), ndigits= 3))), color = color_lst[anumber], fontsize = 10)
         plt.legend(loc ="lower right", ncol = 2)
         plt.savefig('Data\MolarChange\One_Graph')
 
@@ -242,7 +247,7 @@ for i in folders:
         #bplot_graph2(strain, stress, file)
 
         #for plotting the singular file to rule them all uncomment below
-        #one_plotter(strain, stress, file)
+        one_plotter(strain, stress, file)
 
         #for plotting only specific graphs
         #sig = file[17]
@@ -270,7 +275,7 @@ if averages_true:
     #the colors below are a nice palette imho MG
     #color_lst = ['#a559aa', '#59a89c', '#f0c571', '#e02b35', '#082a54']
     #the colors below are good for the color blind
-    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2']
+    color_lst = ['#E69F00', '#56B4E9', '#009E73', '#000000', '#0072B2']
     label_lst = ['10mM', '20mM', '50mM', 'Treated, not biomineralized', 'Not treated']
     avg_strain10=np.array(avg_strain10)/4
     for i in range(len(avg_strain10)):
@@ -316,7 +321,6 @@ if averages_true:
     plt.plot(avg_strainNBM, avg_stressNBM, label = label_lst[4], color = color_lst[4])
     plt.xlabel('Strain[-]')
     plt.ylabel('Stress[Pa]')
-    plt.title('Stress Strain Graph Averages for Compression')
     plt.grid(True)
     plt.legend(loc ="lower right", ncol = 2)
     plt.savefig('Averages')

@@ -1,0 +1,35 @@
+Data\Tensile2\Biomineralized\bm1.csv
+Youngs modulus = 20.71436996460513
+Ultimate compression = 255.6564561081442
+Toughness = 2.705981444450469
+
+Data\Tensile2\Biomineralized\bm2.csv
+Youngs modulus = 19.068817973577275
+Ultimate compression = 235.13536388129933
+Toughness = 2.6492421054178896
+
+Data\Tensile2\Biomineralized\bm3.csv
+Youngs modulus = 19.13875315026954
+Ultimate compression = 262.30390558989507
+Toughness = 3.5077864216090533
+
+Data\Tensile2\Biomineralized\bm4.csv
+Youngs modulus = 18.531705833021633
+Ultimate compression = 242.6880988597924
+Toughness = 3.0578742481093832
+
+Data\Tensile2\NonBiomineralized\nbm1.csv
+Youngs modulus = 23.966039409110007
+Ultimate compression = 319.5412444262402
+Toughness = 3.4174024573729236
+
+Data\Tensile2\NonBiomineralized\nbm2.csv
+Youngs modulus = 25.784174469261192
+Ultimate compression = 324.58897855606
+Toughness = 3.486258431789285
+
+Data\Tensile2\NonBiomineralized\nbm3.csv
+Youngs modulus = 20.35862571416369
+Ultimate compression = 259.24759419457166
+Toughness = 2.7783050441397945
+
