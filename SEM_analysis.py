@@ -6,7 +6,7 @@ from scipy.spatial import cKDTree
 import os
 
 
-conversion = 1174664.587/25400
+conversion = 5.2
 
 
 
@@ -59,34 +59,27 @@ def standardize(lst,std,mean):
     return lst
 
 
-def area(file,threshold,threshold2,pix,img):
+def area(file):
 
     df = pd.read_excel(file)
+    
+
+    
 
     area = df['Area'][1:].tolist()
-    area2 = []
-    for i in area:
-        if i < threshold and i > threshold2:
-            area2.append(i)
-    
+
+
     
     X_data = df['X'][1:].tolist()
     Y_data = df['Y'][1:].tolist()
     
-    x_axis, y_axis = axis_image(img)
-    X_std = []
-    Y_std = []
-    for i in X_data:
-        X_std.append(np.abs(i-x_axis))
-        
-    for j in Y_data:
-        Y_std.append(np.abs(j-y_axis))
     
-    density = nearest_neighbor_analysis(X_std, Y_std)
-
+    density = nearest_neighbor_analysis(X_data, Y_data)
     
-
-    return density,area2
+    
+    #plt.scatter(X_data,Y_data)
+    #plt.show()
+    return density,area
 
 def boxplot(lst,ind):
     
@@ -127,7 +120,7 @@ def get_data(path):
             
        
             files_list.append(folder_files)
-
+    
     return files_list
 
 
@@ -136,88 +129,70 @@ def get_data(path):
 def measure(path,path2):
     
     concentration_lst = []
-    sizes = []
+   
     densities = []
     lst = get_data(path2)
     
-    for folder in os.listdir(path):
-        folder_path = os.path.join(path, folder)
-        
-        idx = os.listdir(path).index(folder)
-        if os.path.isdir(folder_path):
+    for i in lst:
             
             density2 = []
-            sizes2 = []
-            concentration_lst2 = []
-            for file in os.listdir(folder_path):
-                idx2 = os.listdir(folder_path).index(file)
-                
-                file_path = os.path.join(folder_path, file)
 
-                width,height = axis_image(file_path)
-                size = width*height*4
-                sizes2.append(size)
-                density,mineral = area(lst[idx][idx2],3000,10,size,file_path)
+            concentration_lst2 = []
+
+            for j in i:
+                
+
+                density,mineral = area(j)
                 density2.append(density)
                 
-                for i in mineral:
-                    i = i/conversion
-                    concentration_lst2.append(i)
+                for k in mineral:
+                    
+                    concentration_lst2.append(k)
                     
             
             
             
             densities.append(density2)
             concentration_lst.append(concentration_lst2)
-            sizes.append(sizes2)
-            
-    return concentration_lst,sizes,densities
+    
+    
+    return concentration_lst,densities
 
 
-def get_info(lst,lst2,lst3):
+def get_info(lst,lst2):
     final_data = []
-    sizes = []
-
+    diameters2 = []
+    res = 45444.213
     for i in lst:
         idx = lst.index(i)
-        print(min(i))
         
+        diameters = []
+        for j in i:
+            d = 2*np.sqrt(j/np.pi)
+            diameters.append(d)
+            
         
-        area_perc = sum(lst[idx])/(sum(lst2[idx])/conversion)*100
-        count = len(remove_outliers(i))
-        density = np.mean(lst3[idx]) 
-        avg = np.mean(i)
+        diameters2.append(diameters)
+        
+        area_perc = sum(lst[idx])/(len(lst2[idx]))/res*100
+        count = len(i)
+        density = np.mean(lst2[idx]) 
+        avg = np.mean(diameters)
         final_data.append([idx,area_perc,count,density,avg])
 
-        rounded_list = [round(x/0.5)*0.5 for x in i]
-        print(np.mean(rounded_list))
-        
-        value_counts = {}
-        for value in rounded_list:
-            if value in value_counts:
-                value_counts[value] += 1
-            else:
-                value_counts[value] = 1
-                
-        
-
-        # Extract values and counts
-        values = list(value_counts.keys())
-        counts = list(value_counts.values())
-        
-        counts = standardize(counts, np.std(counts), np.mean(counts))
         
         
-        plt.hist(i,bins=100,density=False)
+        plt.hist(diameters,bins=25,density=False)
         plt.xlabel('Particle Size [$\mu$m]')
+        
         plt.ylabel('Count')
         plt.show()
-    boxplot(lst,idx)
+    boxplot(diameters2,idx)
     
      
-    sizes = lst
+    
         
-    return final_data,sizes
+    return final_data
 
 
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -226,21 +201,23 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 path1 = os.path.join(script_dir, "Actual_images")
 path2 = os.path.join(script_dir, "Data_SEM")
 
-Final_data = get_info(measure(path1,path2)[0],measure(path1,path2)[1],measure(path1,path2)[2])
-print(Final_data[0])
+Final_data = get_info(measure(path1,path2)[0],measure(path1,path2)[1])
+print(Final_data)
 
 
 
-X_10 = np.arange(0,len(remove_outliers(Final_data[1][0])),1)
-X_20 = np.arange(0,len(remove_outliers(Final_data[1][1])),1)
-X_50 = np.arange(0,len(remove_outliers(Final_data[1][2])),1)
 
-plt.plot(X_10,sorted(remove_outliers(Final_data[1][0]), reverse=True),color = '#E69F00',label='10mM')
-plt.plot(X_20,sorted(remove_outliers(Final_data[1][1]),reverse=True),color = '#56B4E9',label='20mM')
-plt.plot(X_50,sorted(remove_outliers(Final_data[1][2]),reverse=True),color = '#009E73',label='50mM')
-plt.xlabel('Particle Count')
-plt.ylabel('Particle Diameter [$\mu$m]')
 
-plt.legend(loc='upper right')
-plt.grid(True)
-plt.show() 
+
+#d,a = area(r"C:\Users\thoma\Documents\Python\A01\Data_SEM\50mM\50mM_S1.xlsx")
+
+
+
+#for i in range(len(a)):
+#    a[i] = 2*np.sqrt(a[i]/np.pi)
+    
+
+#print(np.mean(a))
+
+
+
