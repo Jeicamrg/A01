@@ -187,13 +187,13 @@ if averages_true:
             avg_stress10=avg_stress10[:i]
             break
     avg_stress10=np.array(avg_stress10)/4
-    avg_strainNBM=np.array(avg_strainNBM)/4
+    avg_strainNBM=np.array(avg_strainNBM)/3
     for i in range(len(avg_strainNBM)):
         if avg_strainNBM[i+1]<avg_strainNBM[i]:
             avg_strainNBM=avg_strainNBM[:i]
             avg_stressNBM=avg_stressNBM[:i]
             break
-    avg_stressNBM=np.array(avg_stressNBM)/4
+    avg_stressNBM=np.array(avg_stressNBM)/3
 
     #comment or uncomment the following 5 lines depending on what you would like the graph to look like
     plt.plot(avg_strain10, avg_stress10, label = label_lst[0], color = color_lst[0])
