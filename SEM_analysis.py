@@ -18,21 +18,6 @@ def axis_image(file):
 
     return width,height
 
-def remove_outliers(data):
-
-    q1 = np.percentile(data, 25)
-    q3 = np.percentile(data, 75)
-    
-
-    iqr = q3 - q1
-    
-    lower_bound = q1 - 1.5 * iqr
-    upper_bound = q3 + 1.5 * iqr
-    
-
-    data_no_outliers = [x for x in data if lower_bound <= x <= upper_bound]
-    
-    return data_no_outliers
 
 def nearest_neighbor_analysis(x_coords, y_coords):
 
@@ -49,14 +34,6 @@ def nearest_neighbor_analysis(x_coords, y_coords):
     return mean_nn_distance
 
     
-
-def standardize(lst,std,mean):
-    
-    for i in lst:
-        
-        i = (i-mean)/std
-    
-    return lst
 
 
 def area(file):
@@ -88,6 +65,7 @@ def boxplot(lst,ind):
 
     plt.ylabel('Mineral Diameter [$\mu$m]')
     
+    plt.xticks(range(1, len(ind) + 1), ind)
     plt.show()
    
 
@@ -159,7 +137,7 @@ def measure(path,path2):
     return concentration_lst,densities
 
 
-def get_info(lst,lst2):
+def get_parameters(lst,lst2):
     final_data = []
     diameters2 = []
     res = 45444.213
@@ -187,6 +165,7 @@ def get_info(lst,lst2):
         
         plt.ylabel('Count')
         plt.show()
+    idx = ["10 [mM]", "20 [mM]", "50 [mM]"]
     boxplot(diameters2,idx)
     
      
@@ -201,7 +180,7 @@ script_dir = os.path.dirname(os.path.abspath(__file__))
 path1 = os.path.join(script_dir, "Actual_images")
 path2 = os.path.join(script_dir, "Data_SEM")
 
-Final_data = get_info(measure(path1,path2)[0],measure(path1,path2)[1])
+Final_data = get_parameters(measure(path1,path2)[0],measure(path1,path2)[1])
 print(Final_data)
 
 
