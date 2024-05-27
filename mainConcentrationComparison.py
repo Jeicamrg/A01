@@ -6,7 +6,7 @@ import scipy
 import numpy as np
 import matplotlib.pyplot as plt
 from os import listdir
-from mainV2 import calculate_ult_tens, tangent_stiffness, calculate_toughness, new_stiffness
+from mainCompression10mM import calculate_ult_tens, tangent_stiffness, calculate_toughness, new_stiffness
 
 def one_plotter(list1, list2, name):
     if len(list1) != len(list2):
