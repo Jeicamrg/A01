@@ -177,7 +177,7 @@ def get_parameters(lst,lst2):
 script_dir = os.path.dirname(os.path.abspath(__file__))
 
 
-path1 = os.path.join(script_dir, "Actual_images")
+path1 = os.path.join(script_dir, "Actual_images_SEM")
 path2 = os.path.join(script_dir, "Data_SEM")
 
 Final_data = get_parameters(measure(path1,path2)[0],measure(path1,path2)[1])
