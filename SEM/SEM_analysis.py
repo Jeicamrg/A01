@@ -149,7 +149,8 @@ def get_parameters(lst,lst2):
             d = 2*np.sqrt(j/np.pi)
             diameters.append(d)
             
-        
+        print(min(diameters))
+        print(max(diameters))
         diameters2.append(diameters)
         
         area_perc = sum(lst[idx])/(len(lst2[idx]))/res*100
@@ -168,7 +169,7 @@ def get_parameters(lst,lst2):
     idx = ["10 [mM]", "20 [mM]", "50 [mM]"]
     boxplot(diameters2,idx)
     
-     
+    
     
         
     return final_data
